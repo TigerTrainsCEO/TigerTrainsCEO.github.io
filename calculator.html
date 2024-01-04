@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tiger Trains</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src=https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js></script>
+</head>
+
+<body>
+  <script>
+    function display(num) {
+      document.getElementById("input").value += num;
+    }
+    function equal() {
+      document.getElementById("input").value = math.eval(document.getElementById("input").value);
+    }
+  </script>
+  <div class="calculator-grid">
+    <input type="text" id="input" placeholder="Enter Numbers Here">
+    <button onclick="display(1)">1</button>
+    <button onclick="display(2)">2</button>
+    <button onclick="display(3)">3</button>
+    <button onclick="display(4)">4</button>
+    <button onclick="display(5)">5</button>
+    <button onclick="display(6)">6</button>
+    <button onclick="display(7)">7</button>
+    <button onclick="display(8)">8</button>
+    <button onclick="display(9)">9</button>
+    <button onclick="display('+')">+</button>
+    <button onclick="display(0)">0</button>
+    <button onclick="display('-')">-</button>
+    <button onclick="display('*')">*</button>
+    <button onclick="display('/')">/</button>
+    <button onclick="equal()">=</button>
+  </div>
+</body>
+
+</html>
