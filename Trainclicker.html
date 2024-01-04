@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Train Clicker</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h1>Train Clicker</h1>
+    <img id="train" src="Train.png" onclick="incrementCount()">
+    <p id="click-count">Trains: <span id="count"></span></p>
+    <p id="train-freq">tps: <span id="frequency"></span></p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); width: 60vw;">
+
+        <div class="button-container">
+            <button onclick="buyUpgrade()">Buy Upgrade <span id="upgrade-cost"> </span></button>
+            <p id="upgrade-count">Click Power: <span id="upgrades"></span< /p>
+        </div>
+        <div class="button-container">
+            <button onclick="buyWorker()">Buy Worker <span id="worker-cost"></span> </button>
+            <p id="worker-count">Workers: <span id="workers"></span></p>
+        </div>
+        <div class="button-container">
+            <button onclick="buyCoalMine()">Buy Coal Mine <span id="coalmine-cost"></span></button>
+            <p id="coalmine-count">Coal Mines: <span id="coalmines"></span></p>
+        </div>
+        <div class="button-container">
+            <button onclick="buySteelMine()">Buy Steel Mine <span id="steelmine-cost"></span></button>
+            <p id="steelmine-count">Steel Mines: <span id="steelmines"></span></p>
+        </div>
+      <div class="button-container">
+          <button onclick="buyFactory()">Buy Factory <span id="factories-cost"></span></button>
+          <p id="factory-count">Factories: <span id="factories"></span></p>
+      </div>
+    </div>
+
+
+    <script src="Trainclicker.js"></script>
+</body>
+
+</html>
