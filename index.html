@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tiger Trains</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+  <header class="page-header">
+    <h1 id="underlined">Tiger Trains</h1>
+    <div class="dropdown">
+      <button id="underlined">Menu</h1>
+        <div class="dropdown-content">
+          <a class="page-button" href="games.html">Games</a>
+          <a class="page-button" href="info.html">Info</a>
+          <a class="page-button" href="projects.html">Projects</a>
+          <a class="page-button" href="scratch.html">Scratch Games</a>
+          <a href="https://www.Johnny-Airlines.co.uk">Johnny Airlines</a>
+        <a href="https://kacpers-services.github.io">Kacper's Services</a>
+        </div>
+    </div>
+  </header>
+
+
+  <div id="hero-container">
+    <img id="train-hero"
+      src="https://i.pinimg.com/originals/a8/8f/89/a88f89b3c65767d73d5b416b52c52585.jpg"
+      alt="">
+  </div>
+
+  <style>
+    .dropdown {
+      position: relative;
+      display: flex;
+
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      left: -100%;
+      background-color: rgb(3,80,150);
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      padding: 12px 16px;
+      z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+
+  <!--
+  This script places a badge on your repl's full-browser view back to your repl's cover
+  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
+  teal, blue, blurple, magenta, pink!
+  -->
+
+  <script src="script.js"></script>
+
+
+</body>
+
+</html>
