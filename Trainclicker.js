@@ -174,7 +174,7 @@ function buyBank() {
   }
 }
 
-function buycoaltemple() {
+function buycoaltemples() {
   if (count >= coaltemplesCost) {
     incrementTPS(5000);
     count -= coaltemplesCost;
