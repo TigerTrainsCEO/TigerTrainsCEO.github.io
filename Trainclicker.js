@@ -155,7 +155,7 @@ function buyFactory() {
 function buyBank() {
   if (count >= banksCost) {
     incrementTPS(1500);
-    count -= factoriesCost;
+    count -= banksCost;
     localStorage.setItem("count", count);
     banksCost *= 1.5;
     banksCost = Math.floor(banksCost);
@@ -164,8 +164,8 @@ function buyBank() {
     localStorage.setItem("banks", banks);
 
     document.getElementById("count").innerHTML = count;
-    document.getElementById("factories").innerHTML = banks;
-    document.getElementById("factories-cost").innerHTML = banksCost;
+    document.getElementById("banks").innerHTML = banks;
+    document.getElementById("banks-cost").innerHTML = banksCost;
 
   }
 }
