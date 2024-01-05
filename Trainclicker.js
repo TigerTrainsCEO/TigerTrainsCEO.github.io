@@ -174,7 +174,7 @@ function buyBank() {
   }
 }
 
-function buyBank() {
+function buycoaltemple() {
   if (count >= coaltemplesCost) {
     incrementTPS(5000);
     count -= coaltemplesCost;
@@ -186,8 +186,8 @@ function buyBank() {
     localStorage.setItem("coaltemples", coaltemples);
 
     document.getElementById("count").innerHTML = count;
-    document.getElementById("banks").innerHTML = coaltemples;
-    document.getElementById("banks-cost").innerHTML = coaltemplesCost;
+    document.getElementById("coaltemples").innerHTML = coaltemples;
+    document.getElementById("coaltemples-cost").innerHTML = coaltemplesCost;
 
   }
 }
