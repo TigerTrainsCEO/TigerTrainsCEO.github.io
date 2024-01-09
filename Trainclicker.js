@@ -17,6 +17,7 @@ var steelmineCost = storageCheck("steelmineCost", 1000);
 var factoriesCost = storageCheck("factoriesCost", 5000);
 var banksCost = storageCheck("banksCost", 20000);
 var coaltemplesCost = storageCheck("coaltemplesCost", 50000);
+var superclickCost = storageCheck("superclickCost", 75000);
 
 
 //Update the onscreen variable
@@ -38,6 +39,7 @@ document.getElementById("steelmine-cost").innerHTML = steelmineCost;
 document.getElementById("factories-cost").innerHTML = factoriesCost;
 document.getElementById("banks-cost").innerHTML = banksCost;
 document.getElementById("coaltemples-cost").innerHTML = coaltemplesCost;
+document.getElementById("superclick-cost").innerHTML = superclickCost;
 
 //Returns the value of a stored variable, if the variable has no value it sets it to amount
 function storageCheck(name, amount) {
@@ -83,6 +85,23 @@ function buyUpgrade() {
     document.getElementById("upgrade-cost").innerHTML = upgradeCost;
   }
 }
+
+function buySuperClicker() {
+  if (count >= superclickCost) {
+    count -= superclickCost;
+    localStorage.setItem("count", count);
+    superclickCost *= 1.25;
+    superclickCost = Math.floor(superclickCost);
+    localStorage.setItem("superclickCost", superclickCost);
+    upgrades++5;
+    localStorage.setItem("upgrades", upgrades);
+
+    document.getElementById("count").innerHTML = count;
+    document.getElementById("upgrades").innerHTML = upgrades;
+    document.getElementById("superclick-cost").innerHTML = superclickCost;
+  }
+}
+
 
 function buyWorker() {
   if (count >= workerCost) {
