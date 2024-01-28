@@ -18,7 +18,7 @@ var steelmineCost = storageCheck("steelmineCost", 1000);
 var factoriesCost = storageCheck("factoriesCost", 5000);
 var banksCost = storageCheck("banksCost", 20000);
 var coaltemplesCost = storageCheck("coaltemplesCost", 50000);
-var steelltemplesCost = storageCheck("steeltemplesCost", 250000);
+var steeltemplesCost = storageCheck("steeltemplesCost", 250000);
 
 
 //Update the onscreen variable
