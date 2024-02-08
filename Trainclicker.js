@@ -12,6 +12,8 @@ var coaltemples = storageCheck("coaltemples", 0);
 var steeltemples = storageCheck("steeltemples", 0);
 var wt = storageCheck("wt", 0);
 var cp = storageCheck("cp", 0);
+var sp = storageCheck("sp", 0);
+
 
 var upgradeCost = storageCheck("upgradeCost", 20);
 var workerCost = storageCheck("workerCost", 100);
@@ -23,6 +25,7 @@ var coaltemplesCost = storageCheck("coaltemplesCost", 50000);
 var steeltemplesCost = storageCheck("steeltemplesCost", 250000);
 var wtCost = storageCheck("wtCost", 1000000);
 var cpCost = storageCheck("cpCost", 25000000);
+var spCost = storageCheck("spCost", 100000000);
 
 
 //Update the onscreen variable
@@ -39,6 +42,7 @@ document.getElementById("coaltemples").innerHTML = coaltemples;
 document.getElementById("steeltemples").innerHTML = steeltemples;
 document.getElementById("wt").innerHTML = wt;
 document.getElementById("cp").innerHTML = cp;
+document.getElementById("sp").innerHTML = sp;
 
 document.getElementById("upgrade-cost").innerHTML = upgradeCost;
 document.getElementById("worker-cost").innerHTML = workerCost;
@@ -50,6 +54,7 @@ document.getElementById("coaltemples-cost").innerHTML = coaltemplesCost;
 document.getElementById("steeltemples-cost").innerHTML = steeltemplesCost;
 document.getElementById("wt-cost").innerHTML = wtCost;
 document.getElementById("cp-cost").innerHTML = cpCost;
+document.getElementById("sp-cost").innerHTML = spCost;
 
 
 //Returns the value of a stored variable, if the variable has no value it sets it to amount
@@ -259,6 +264,24 @@ function buyCoalPlanet() {
   }
 }
 
+function buySteelPlanet() {
+  if (count >= spCost) {
+    incrementTPS(500000);
+    count -= spCost;
+    localStorage.setItem("count", count);
+    spCost *= 1.5;
+    spCost = Math.floor(cpCost);
+    localStorage.setItem("spCost", spCost);
+    sp++;
+    localStorage.setItem("sp", sp);
+
+    document.getElementById("count").innerHTML = count;
+    document.getElementById("sp").innerHTML = sp;
+    document.getElementById("sp-cost").innerHTML = spCost;
+
+  }
+}
+
 setInterval(passiveTrain, 1000);
 setInterval(passiveCoalMine, 1000);
 setInterval(passiveSteelMine, 1000);
@@ -268,6 +291,7 @@ setInterval(passiveCoalTemples, 1000);
 setInterval(passiveSteelTemples, 1000);
 setInterval(passiveWT, 1000);
 setInterval(passiveCP, 1000);
+setInterval(passiveSP, 1000);
 
 function passiveTrain() {
   for (let i = 0; i < workers; i++) {
@@ -336,6 +360,14 @@ function passiveWT() {
 function passiveCP() {
   for (let i = 0; i < cp; i++) {
     count = parseInt(count) + 200000;
+  }
+  localStorage.setItem("count", count);
+  document.getElementById("count").innerHTML = count;
+}
+
+function passiveSP() {
+  for (let i = 0; i < sp; i++) {
+    count = parseInt(count) + 500000;
   }
   localStorage.setItem("count", count);
   document.getElementById("count").innerHTML = count;
