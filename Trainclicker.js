@@ -270,7 +270,7 @@ function buySteelPlanet() {
     count -= spCost;
     localStorage.setItem("count", count);
     spCost *= 1.5;
-    spCost = Math.floor(cpCost);
+    spCost = Math.floor(spCost);
     localStorage.setItem("spCost", spCost);
     sp++;
     localStorage.setItem("sp", sp);
