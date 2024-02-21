@@ -19,7 +19,7 @@
     }
   </script>
   <div class="calculator-grid">
-    <input type="text" id="input" placeholder="Enter Numbers Here"><input type="button" value="⇤" onclick="del()">
+    <input type="text" id="input" placeholder="Enter Numbers Here"><input type="button" value="⇤" onclick="del()"><input type="button" value="CLEAR" onclick="clear()">
     <button onclick="display(1)">1</button>
     <button onclick="display(2)">2</button>
     <button onclick="display(3)">3</button>
@@ -40,6 +40,10 @@
   function del() {
   str=document.getElementById("input").value;
   document.getElementById("input").value=str.slice(0,-1);
+  }
+
+  function clear() {
+    document.getElementById("input").value="";
   }
 </script>
 
