@@ -13,6 +13,7 @@ var steeltemples = storageCheck("steeltemples", 0);
 var wt = storageCheck("wt", 0);
 var cp = storageCheck("cp", 0);
 var sp = storageCheck("sp", 0);
+var cd = storageCheck("cd", 0);
 
 
 var upgradeCost = storageCheck("upgradeCost", 20);
@@ -26,6 +27,7 @@ var steeltemplesCost = storageCheck("steeltemplesCost", 250000);
 var wtCost = storageCheck("wtCost", 1000000);
 var cpCost = storageCheck("cpCost", 25000000);
 var spCost = storageCheck("spCost", 100000000);
+var cdCost = storageCheck("cdCost", 250000000);
 
 
 //Update the onscreen variable
@@ -43,6 +45,7 @@ document.getElementById("steeltemples").innerHTML = steeltemples;
 document.getElementById("wt").innerHTML = wt;
 document.getElementById("cp").innerHTML = cp;
 document.getElementById("sp").innerHTML = sp;
+document.getElementById("cd").innerHTML = cd;
 
 document.getElementById("upgrade-cost").innerHTML = upgradeCost;
 document.getElementById("worker-cost").innerHTML = workerCost;
@@ -55,6 +58,7 @@ document.getElementById("steeltemples-cost").innerHTML = steeltemplesCost;
 document.getElementById("wt-cost").innerHTML = wtCost;
 document.getElementById("cp-cost").innerHTML = cpCost;
 document.getElementById("sp-cost").innerHTML = spCost;
+document.getElementById("cd-cost").innerHTML = cdCost;
 
 
 //Returns the value of a stored variable, if the variable has no value it sets it to amount
@@ -282,6 +286,24 @@ function buySteelPlanet() {
   }
 }
 
+function buyCoalDimension() {
+  if (count >= cdCost) {
+    incrementTPS(2500000);
+    count -= cdcost;
+    localStorage.setItem("count", count);
+    cdCost *= 1.5;
+    cdCost = Math.floor(cdCost);
+    localStorage.setItem("cdCost", cdCost);
+    cd++;
+    localStorage.setItem("cd", cd);
+
+    document.getElementById("count").innerHTML = count;
+    document.getElementById("cd").innerHTML = cd;
+    document.getElementById("cd-cost").innerHTML = cdCost;
+
+  }
+}
+
 setInterval(passiveTrain, 1000);
 setInterval(passiveCoalMine, 1000);
 setInterval(passiveSteelMine, 1000);
@@ -292,6 +314,7 @@ setInterval(passiveSteelTemples, 1000);
 setInterval(passiveWT, 1000);
 setInterval(passiveCP, 1000);
 setInterval(passiveSP, 1000);
+setInterval(passiveCD, 1000);
 
 function passiveTrain() {
   for (let i = 0; i < workers; i++) {
@@ -368,6 +391,14 @@ function passiveCP() {
 function passiveSP() {
   for (let i = 0; i < sp; i++) {
     count = parseInt(count) + 500000;
+  }
+  localStorage.setItem("count", count);
+  document.getElementById("count").innerHTML = count;
+}
+
+function passiveCD() {
+  for (let i = 0; i < sp; i++) {
+    count = parseInt(count) + 2500000;
   }
   localStorage.setItem("count", count);
   document.getElementById("count").innerHTML = count;
