@@ -14,6 +14,7 @@ var wt = storageCheck("wt", 0);
 var cp = storageCheck("cp", 0);
 var sp = storageCheck("sp", 0);
 var cd = storageCheck("cd", 0);
+var sd = storageCheck("sd", 0);
 
 
 var upgradeCost = storageCheck("upgradeCost", 20);
@@ -28,6 +29,7 @@ var wtCost = storageCheck("wtCost", 1000000);
 var cpCost = storageCheck("cpCost", 25000000);
 var spCost = storageCheck("spCost", 100000000);
 var cdCost = storageCheck("cdCost", 250000000);
+var sdCost = storageCheck("sdCost", 1000000000);
 
 
 //Update the onscreen variable
@@ -46,6 +48,7 @@ document.getElementById("wt").innerHTML = wt;
 document.getElementById("cp").innerHTML = cp;
 document.getElementById("sp").innerHTML = sp;
 document.getElementById("cd").innerHTML = cd;
+document.getElementById("cd").innerHTML = sd;
 
 document.getElementById("upgrade-cost").innerHTML = upgradeCost;
 document.getElementById("worker-cost").innerHTML = workerCost;
@@ -59,6 +62,7 @@ document.getElementById("wt-cost").innerHTML = wtCost;
 document.getElementById("cp-cost").innerHTML = cpCost;
 document.getElementById("sp-cost").innerHTML = spCost;
 document.getElementById("cd-cost").innerHTML = cdCost;
+document.getElementById("sd-cost").innerHTML = cdCost;
 
 
 //Returns the value of a stored variable, if the variable has no value it sets it to amount
@@ -304,6 +308,24 @@ function buyCoalDimension() {
   }
 }
 
+function buySteelDimension() {
+  if (count >= sdCost) {
+    incrementTPS(5000000);
+    count -= sdcost;
+    localStorage.setItem("count", count);
+    sdCost *= 1.5;
+    sdCost = Math.floor(sdCost);
+    localStorage.setItem("sdCost", sdCost);
+    sd++;
+    localStorage.setItem("sd", sd);
+
+    document.getElementById("count").innerHTML = count;
+    document.getElementById("sd").innerHTML = sd;
+    document.getElementById("sd-cost").innerHTML = sdCost;
+
+  }
+}
+
 setInterval(passiveTrain, 1000);
 setInterval(passiveCoalMine, 1000);
 setInterval(passiveSteelMine, 1000);
@@ -315,6 +337,7 @@ setInterval(passiveWT, 1000);
 setInterval(passiveCP, 1000);
 setInterval(passiveSP, 1000);
 setInterval(passiveCD, 1000);
+setInterval(passiveSD, 1000);
 
 function passiveTrain() {
   for (let i = 0; i < workers; i++) {
@@ -399,6 +422,14 @@ function passiveSP() {
 function passiveCD() {
   for (let i = 0; i < sp; i++) {
     count = parseInt(count) + 2500000;
+  }
+  localStorage.setItem("count", count);
+  document.getElementById("count").innerHTML = count;
+}
+
+function passiveSD() {
+  for (let i = 0; i < sp; i++) {
+    count = parseInt(count) + 5000000;
   }
   localStorage.setItem("count", count);
   document.getElementById("count").innerHTML = count;
