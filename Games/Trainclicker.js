@@ -48,7 +48,7 @@ document.getElementById("wt").innerHTML = wt;
 document.getElementById("cp").innerHTML = cp;
 document.getElementById("sp").innerHTML = sp;
 document.getElementById("cd").innerHTML = cd;
-document.getElementById("cd").innerHTML = sd;
+document.getElementById("sd").innerHTML = sd;
 
 document.getElementById("upgrade-cost").innerHTML = upgradeCost;
 document.getElementById("worker-cost").innerHTML = workerCost;
@@ -62,7 +62,7 @@ document.getElementById("wt-cost").innerHTML = wtCost;
 document.getElementById("cp-cost").innerHTML = cpCost;
 document.getElementById("sp-cost").innerHTML = spCost;
 document.getElementById("cd-cost").innerHTML = cdCost;
-document.getElementById("sd-cost").innerHTML = cdCost;
+document.getElementById("sd-cost").innerHTML = sdCost;
 
 
 //Returns the value of a stored variable, if the variable has no value it sets it to amount
