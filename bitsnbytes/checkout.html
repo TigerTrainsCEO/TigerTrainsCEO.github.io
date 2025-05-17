@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Bits & Bytes Tech Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #1d04ad; color: #cdf714; }
+        header { background: #222; color: #fff; padding: 1rem 2rem; text-align: center; position: relative; }
+        .container { 
+            max-width: 600px; 
+            margin: 2rem auto; 
+            background: #241192; 
+            padding: 2rem; 
+            border-radius: 8px;
+        }
+        h1, h2 { color: #cdf714; text-align: center; }
+        label { color: #cdf714; display: block; margin-top: 1rem; }
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.3rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .checkout-btn {
+            background: #add10d;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .checkout-btn:hover { background: #9dbe0a; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: #add10d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .checkout-list {
+            margin: 2rem 0;
+        }
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #3f32f7;
+            padding: 0.7rem 0;
+        }
+        .checkout-item:last-child {
+            border-bottom: none;
+        }
+        .checkout-total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+        }
+        .empty-cart {
+            text-align: center;
+            color: #cdf714;
+            margin: 2rem 0;
+        }
+        .summary {
+            background: #3f32f7;
+            color: #cdf714;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        footer { text-align: center; color: #cdf714; margin: 2rem 0 0 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-link" style="position:absolute;left:2rem;top:1.5rem;">&larr; Back to Store</a>
+        <h1>Checkout</h1>
+    </header>
+    <div class="container">
+        <h2>Order Summary</h2>
+        <div class="checkout-list" id="checkoutList">
+            <p><strong>Note:</strong> This is a demo checkout page. No real purchases will be made.</p>
+        </div>
+        <div class="checkout-total" id="checkoutTotal"></div>
+        <form onsubmit="alert('Thank you for your (pretend) purchase!'); return false;">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" required>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required>
+            <label for="address">Shipping Address</label>
+            <input type="text" id="address" required>
+            <label for="payment">Payment Method</label>
+            <select id="payment" required>
+                <option value="">Select...</option>
+                <option>Credit Card</option>
+                <option>PayPal</option>
+                <option>Apple Pay</option>
+            </select>
+            <button class="checkout-btn" type="submit">Complete Purchase</button>
+        </form>
+    </div>
+    <footer>
+        &copy; 2025 Bits & Bytes Tech Store. All rights reserved.
+    </footer>
+    <script>
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart') || '[]');
+        }
+        function renderCheckout() {
+            let cart = getCart();
+            let checkoutList = document.getElementById('checkoutList');
+            let checkoutTotal = document.getElementById('checkoutTotal');
+            if (cart.length === 0) {
+                checkoutList.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+                checkoutTotal.textContent = '';
+                return;
+            }
+            let html = '';
+            let total = 0;
+            cart.forEach(item => {
+                html += `<div class="checkout-item">
+                    <span>${item.name} x${item.qty}</span>
+                    <span>£${(item.price * item.qty).toFixed(2)}</span>
+                </div>`;
+                total += item.price * item.qty;
+            });
+            checkoutList.innerHTML = html;
+            checkoutTotal.textContent = 'Total: £' + total.toFixed(2);
+        }
+        renderCheckout();
+    </script>
+</body>
+</html>

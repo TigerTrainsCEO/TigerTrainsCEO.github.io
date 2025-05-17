@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body { font-family: Arial, sans-serif; margin: 0; background: #1d04ad; }
-        header { background: #222; color: #fff; padding: 1rem 2rem; text-align: center; }
+        header { background: #222; color: #fff; padding: 1rem 2rem; text-align: center; position: relative; }
         .container { 
             max-width: 1000px; 
             margin: 2rem auto; 
@@ -32,82 +32,268 @@
         .buy-btn { background: #add10d; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
         .buy-btn:hover { background: #9dbe0a; }
         footer { text-align: center; color: #cdf714; margin: 2rem 0 0 0; }
+        .checkout-link {
+            position: fixed;
+            right: 340px; /* moved left to clear cart sidebar */
+            top: 1.5rem;
+            background: #add10d;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+            z-index: 2000; /* ensure above cart/sidebar */
+            display: none; /* hide by default, show via JS if cart not empty */
+        }
+        .checkout-link.visible {
+            display: inline-block;
+        }
+        .checkout-link:hover {
+            background: #9dbe0a;
+        }
+        @media (max-width: 1200px) {
+            .checkout-link {
+                right: 1rem; /* fallback to right edge on smaller screens */
+                top: 1rem;
+                padding: 0.5rem 0.7rem;
+                font-size: 0.95rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .checkout-link {
+                right: 1rem;
+                top: 1rem;
+                padding: 0.5rem 0.7rem;
+                font-size: 0.95rem;
+            }
+        }
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 320px;
+            height: 100%;
+            background: #241192;
+            color: #cdf714;
+            border-left: 2px solid #3f32f7;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            box-sizing: border-box;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-sidebar h3 {
+            margin-top: 0;
+            color: #cdf714;
+            text-align: center;
+        }
+        .cart-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+        .cart-item {
+            border-bottom: 1px solid #3f32f7;
+            padding: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-total {
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+        .clear-cart-btn {
+            background: #add10d;
+            color: #fff;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        .clear-cart-btn:hover {
+            background: #9dbe0a;
+        }
+        @media (max-width: 1200px) {
+            .cart-sidebar { width: 100%; position: static; border-left: none; margin-bottom: 2rem; }
+        }
+        @media (max-width: 900px) {
+            .cart-sidebar { display: none; }
+        }
+        .main-content {
+            margin-right: 340px;
+        }
+        @media (max-width: 1200px) {
+            .main-content { margin-right: 0; }
+        }
     </style>
 </head>
 <body>
     <header>
+        <a href="checkout.html" class="checkout-link">Go to Checkout</a>
         <h1>Bits & Bytes Tech Store</h1>
         <p>Your one-stop shop for the latest tech gadgets!</p>
     </header>
-    <div class="container">
-        <h2>Featured Products</h2>
- <div class="products">
-    <div class="product">
-        <img src="https://m.media-amazon.com/images/I/51o2VzSkYJL._AC_UF1000,1000_QL80_.jpg" alt="USB Drive">
-        <h3>64GB USB 3.0 Flash Drive</h3>
-        <p>Fast, reliable storage for all your files.</p>
-        <div class="price">£14.78</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
+    <div class="main-content">
+        <div class="container">
+            <h2>Featured Products</h2>
+            <div class="products">
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/51o2VzSkYJL._AC_UF1000,1000_QL80_.jpg" alt="USB Drive">
+                    <h3>64GB USB 3.0 Flash Drive</h3>
+                    <p>Fast, reliable storage for all your files.</p>
+                    <div class="price">£14.78</div>
+                    <button class="buy-btn" onclick="addToCart('64GB USB 3.0 Flash Drive', 14.78)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/71T1WQSxp9L._AC_UF1000,1000_QL80_.jpg" alt="Mechanical Keyboard">
+                    <h3>Mechanical Keyboard</h3>
+                    <p>RGB backlit, tactile switches, perfect for gaming and work.</p>
+                    <div class="price">£45.18</div>
+                    <button class="buy-btn" onclick="addToCart('Mechanical Keyboard', 45.18)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://www.ryman.co.uk/media/catalog/product/1/6/1605020029_1.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=550&width=550&canvas=550:550" alt="Wireless Mouse">
+                    <h3>Wireless Mouse</h3>
+                    <p>Ergonomic design, long battery life, smooth tracking.</p>
+                    <div class="price">£13.29</div>
+                    <button class="buy-btn" onclick="addToCart('Wireless Mouse', 13.29)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://gladiatorpc.co.uk//assets/img/configurator/72971Image1.webp" alt="Gaming PC">
+                    <h3>Gaming PC</h3>
+                    <p>RTX 5090, 285K 24 Core & RGB lighting</p>
+                    <div class="price">£5,299.99</div>
+                    <button class="buy-btn" onclick="addToCart('Gaming PC', 5299.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://www.punchtechnology.co.uk/wp-content/uploads/2025/03/P500CWmain.webp" alt="Elite X Gaming PC">
+                    <h3>Elite X Gaming PC</h3>
+                    <p>Core i5-12600KF 3.7/4.9GHz 10 Core, 16 Thread</p>
+                    <div class="price">£1,458.24</div>
+                    <button class="buy-btn" onclick="addToCart('Elite X Gaming PC', 1458.24)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/51-kkNP6OcL._AC_UF1000,1000_QL80_.jpg" alt="Xbox Series X">
+                    <h3>Xbox Series X</h3>
+                    <p>1 TB storage</p>
+                    <div class="price">£549.99</div>
+                    <button class="buy-btn" onclick="addToCart('Xbox Series X', 549.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-2-hero-select-202409?wid=976&hei=916&fmt=jpeg&qlt=90&.v=WTk1dTl5UTBnZXdKN2tua2pFb1hvQ3hmVXd6RnorM2pzUlRIKzNkUEN0U2VDYXovZDMyN1dXU211bjZoVlVUcWJGcXNRQnFCV0w3WVRjTExvdm1ic1dyYTFZWlpPczBocnFKR3FYSlo5L1FXZEdHNUFPR0hYUU12cjI0VlFzM1A" alt="Noise Cancelling Headphones">
+                    <h3>AirPods Pro 2</h3>
+                    <p>Up to 30 hours of total listening time with Active Noise Cancellation enabled, using the case. (Wireless, noise cancellation/transparency modes)</p>
+                    <div class="price">£229.99</div>
+                    <button class="buy-btn" onclick="addToCart('AirPods Pro 2', 229.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/s10-case-unselect-gallery-1-202503?wid=5120&hei=3280&fmt=p-jpg&qlt=80&.v=T1poMzZuRzBxQ1RzQmhMUHprUE5LZHlVRllKam5abHNZRGludXlMbytKNjZqY1lkK0tzZFpEVlpBSXpHb1VXNVBPMVJocHRGWWdEaGFBbE5iRklMb1hPYW04cW1YR2l1R0RzLzYxenhFZTlwZDRjSG44dlRjQnB4RFJ4d3IvN0o" alt="Apple Watch Series 10">
+                    <h3>Apple Watch Series 10</h3>
+                    <p>46mm or 42mm aluminium or titanium case size. Fitness tracking, heart rate monitoring, sleep tracking</p>
+                    <div class="price">£399.99</div>
+                    <button class="buy-btn" onclick="addToCart('Apple Watch Series 10', 399.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/homepod-mini-select-midnight-202407_FV1?wid=1868&hei=880&fmt=jpeg&qlt=90&.v=K2c3bEwyaWVDeDZkdHpLbHkwcGVSaFRaZXZublY0K2p0Ri9sOWcwbVh6aVUvTHBkeUd0RmJJUmY3SGlWbDc5azN6WWY5a1JiR3h2V2h5Mis1dmgwRVVkbTFFQitQQWRJRHBZb055K1dRU3lmeDZEeWhOM2xFeWZvZFNjaEtlTDY" alt="HomePod mini (speaker)">
+                    <h3>HomePod mini (speaker)</h3>
+                    <p>Comes with Siri & a surprising sound for its size.</p>
+                    <div class="price">£99.99</div>
+                    <button class="buy-btn" onclick="addToCart('HomePod mini (speaker)', 99.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRsnCkFpqCQatu4mvscPEWsfiHzfsIT-FMo7vS0ZrfWnnGXBPldyRZUwVNh2jibr4yodCTDcAi9jnFJE1qrceI1hTWUnJOzVCw7KD1qdclO&usqp=CAc" alt="27&quot; 4K UHD Monitor">
+                    <h3>Lenovo L27h-4A 2K QHD Monitor (27")</h3>
+                    <p>Contrast-16:9, 100Hz refresh rate, HDMI & DisplayPort.</p>
+                    <div class="price">£329.99</div>
+                    <button class="buy-btn" onclick="addToCart('27&quot; 4K UHD Monitor', 329.99)">Buy Now</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="product">
-        <img src="https://m.media-amazon.com/images/I/71T1WQSxp9L._AC_UF1000,1000_QL80_.jpg" alt="Mechanical Keyboard">
-        <h3>Mechanical Keyboard</h3>
-        <p>RGB backlit, tactile switches, perfect for gaming and work.</p>
-        <div class="price">£45.18</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
+    <div class="cart-sidebar" id="cartSidebar">
+        <h3>Shopping List</h3>
+        <div class="cart-list" id="cartList">
+            <p style="text-align:center; color:#cdf714;">Your cart is empty.</p>
+        </div>
+        <div class="cart-total" id="cartTotal"></div>
+        <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
     </div>
-    <div class="product">
-        <img src="https://www.ryman.co.uk/media/catalog/product/1/6/1605020029_1.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=550&width=550&canvas=550:550" alt="Wireless Mouse">
-        <h3>Wireless Mouse</h3>
-        <p>Ergonomic design, long battery life, smooth tracking.</p>
-        <div class="price">£13.29</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
-    </div>
-    <div class="product">
-        <img src="https://gladiatorpc.co.uk//assets/img/configurator/72971Image1.webp" alt="Gaming PC">
-        <h3>Gaming PC</h3>
-        <p>RTX 5090, 285K 24 Core & RGB lighting</p>
-        <div class="price">£5,299.99</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
-    </div>
-    <div class="product">
-        <img src="https://www.punchtechnology.co.uk/wp-content/uploads/2025/03/P500CWmain.webp" alt="Elite X Gaming PC">
-        <h3>Elite X Gaming PC</h3>
-        <p>Core i5-12600KF 3.7/4.9GHz 10 Core, 16 Thread</p>
-        <div class="price">£1,458.24</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
-    </div>
-    <div class="product">
-        <img src="https://m.media-amazon.com/images/I/51-kkNP6OcL._AC_UF1000,1000_QL80_.jpg" alt="Xbox Series X">
-        <h3>Xbox Series X</h3>
-        <p>1 TB storage</p>
-        <div class="price">£549.99</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
-    </div>
-    <div class="product">
-        <img src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-2-hero-select-202409?wid=976&hei=916&fmt=jpeg&qlt=90&.v=WTk1dTl5UTBnZXdKN2tua2pFb1hvQ3hmVXd6RnorM2pzUlRIKzNkUEN0U2VDYXovZDMyN1dXU211bjZoVlVUcWJGcXNRQnFCV0w3WVRjTExvdm1ic1dyYTFZWlpPczBocnFKR3FYSlo5L1FXZEdHNUFPR0hYUU12cjI0VlFzM1A" alt="Noise Cancelling Headphones">
-        <h3>AirPods Pro 2</h3>
-        <p>Up to 30 hours of total listening time with Active Noise Cancellation enabled, using the case. (Wireless, noise cancellation/transparency modes)</p>
-        <div class="price">£229.99</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
-    </div>
-    <div class="product">
-        <img src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/s10-case-unselect-gallery-1-202503?wid=5120&hei=3280&fmt=p-jpg&qlt=80&.v=T1poMzZuRzBxQ1RzQmhMUHprUE5LZHlVRllKam5abHNZRGludXlMbytKNjZqY1lkK0tzZFpEVlpBSXpHb1VXNVBPMVJocHRGWWdEaGFBbE5iRklMb1hPYW04cW1YR2l1R0RzLzYxenhFZTlwZDRjSG44dlRjQnB4RFJ4d3IvN0o" alt="Apple Watch Series 10">
-        <h3>Apple Watch Series 10</h3>
-        <p>46mm or 42mm aluminium or titanium case size. Fitness tracking, heart rate monitoring, sleep tracking</p>
-        <div class="price">£399.99</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
-    </div>
-    <div class="product">
-        <img src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/homepod-mini-select-midnight-202407_FV1?wid=1868&hei=880&fmt=jpeg&qlt=90&.v=K2c3bEwyaWVDeDZkdHpLbHkwcGVSaFRaZXZublY0K2p0Ri9sOWcwbVh6aVUvTHBkeUd0RmJJUmY3SGlWbDc5azN6WWY5a1JiR3h2V2h5Mis1dmgwRVVkbTFFQitQQWRJRHBZb055K1dRU3lmeDZEeWhOM2xFeWZvZFNjaEtlTDY" alt="HomePod mini (speaker)">
-        <h3>HomePod mini (speaker)</h3>
-        <p>Comes with Siri & a surprising sound for its size.</p>
-        <div class="price">£99.99</div>
-        <button class="buy-btn" onclick="alert('Thank you for your interest! Checkout coming soon.')">Buy Now</button>
-    </div>
-</div>
     <footer>
         &copy; 2025 Bits & Bytes Tech Store. All rights reserved.
     </footer>
+    <script>
+        // Simple cart logic using localStorage for persistence
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart') || '[]');
+        }
+        function setCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        function addToCart(name, price) {
+            let cart = getCart();
+            let found = cart.find(item => item.name === name);
+            if (found) {
+                found.qty += 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            setCart(cart);
+            renderCart();
+        }
+        function clearCart() {
+            setCart([]);
+            renderCart();
+        }
+        function renderCart() {
+            let cart = getCart();
+            let cartList = document.getElementById('cartList');
+            let cartTotal = document.getElementById('cartTotal');
+            let checkoutLink = document.querySelector('.checkout-link');
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p style="text-align:center; color:#cdf714;">Your cart is empty.</p>';
+                cartTotal.textContent = '';
+                // Hide checkout link if cart is empty
+                checkoutLink.classList.remove('visible');
+                return;
+            }
+            let html = '';
+            let total = 0;
+            cart.forEach(item => {
+                html += `<div class="cart-item">
+                    <span>${item.name} x${item.qty}</span>
+                    <span>£${(item.price * item.qty).toFixed(2)}</span>
+                </div>`;
+                total += item.price * item.qty;
+            });
+            cartList.innerHTML = html;
+            cartTotal.textContent = 'Total: £' + total.toFixed(2);
+            // Show checkout link if cart is not empty
+            checkoutLink.classList.add('visible');
+            checkoutLink.setAttribute('href', 'checkout.html');
+            checkoutLink.classList.remove('disabled');
+        }
+        // Render cart on page load
+        renderCart();
+
+        // Hide checkout link if cart is empty on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            let cart = getCart();
+            let checkoutLink = document.querySelector('.checkout-link');
+            if (cart.length === 0) {
+                checkoutLink.classList.remove('visible');
+            } else {
+                checkoutLink.classList.add('visible');
+            }
+        });
+    </script>
 </body>
 </html>
