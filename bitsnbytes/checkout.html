@@ -90,6 +90,7 @@
             <p><strong>Note:</strong> This is a demo checkout page. No real purchases will be made.</p>
         </div>
         <div class="checkout-total" id="checkoutTotal"></div>
+        <div class="checkout-total" id="grandTotal"></div>
         <form onsubmit="alert('Thank you for your (pretend) purchase!'); return false;">
             <label for="name">Full Name</label>
             <input type="text" id="name" required>
@@ -112,30 +113,39 @@
     </footer>
     <script>
         function getCart() {
-            return JSON.parse(localStorage.getItem('cart') || '[]');
+            try {
+                const cart = JSON.parse(localStorage.getItem('cart'));
+                return Array.isArray(cart) ? cart : [];
+            } catch {
+                return [];
+            }
         }
         function renderCheckout() {
             let cart = getCart();
             let checkoutList = document.getElementById('checkoutList');
             let checkoutTotal = document.getElementById('checkoutTotal');
-            if (cart.length === 0) {
-                checkoutList.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
+            if (!cart || cart.length === 0) {
+                checkoutList.innerHTML = '<p style="text-align:center; color:#cdf714;">Your cart is empty.</p>';
                 checkoutTotal.textContent = '';
                 return;
             }
             let html = '';
-            let total = 0;
+            let subtotal = 0;
             cart.forEach(item => {
+                let price = Number(item.price);
                 html += `<div class="checkout-item">
                     <span>${item.name} x${item.qty}</span>
-                    <span>£${(item.price * item.qty).toFixed(2)}</span>
+                    <span>£${(price * item.qty).toFixed(2)}</span>
                 </div>`;
-                total += item.price * item.qty;
+                subtotal += price * item.qty;
             });
             checkoutList.innerHTML = html;
-            checkoutTotal.textContent = 'Total: £' + total.toFixed(2);
+            checkoutTotal.innerHTML =
+                'Total: £' + subtotal.toFixed(2);
         }
-        renderCheckout();
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCheckout();
+        });
     </script>
 </body>
 </html>
