@@ -7,12 +7,26 @@
     <style>
         body { font-family: Arial, sans-serif; margin: 0; background: #1d04ad; }
         header { background: #222; color: #fff; padding: 1rem 2rem; text-align: center; }
-        .container { max-width: 1000px; margin: 2rem auto; background: #241192; padding: 2rem; border-radius: 8px; }
-        .products { display: flex; flex-wrap: wrap; gap: 2rem; }
+        .container { 
+            max-width: 1000px; 
+            margin: 2rem auto; 
+            background: #241192; 
+            padding: 2rem; 
+            border-radius: 8px;
+        }
+        .products { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 2rem; 
+            justify-content: center; /* Center products horizontally */
+        }
         .product { background: #3f32f7; border: 1px solid #fff; border-radius: 6px; padding: 1rem; width: 220px; text-align: center; }
         .product img { width: 120px; height: 120px; object-fit: contain; }
         .product h3 { margin: 0.5rem 0; color: #cdf714; }
-        .container h2 { color: #cdf714; }
+        .container h2 { 
+            color: #cdf714; 
+            text-align: center; /* Center the heading */
+        }
         .product p { color: #cdf714; }
         .product .price { font-weight: bold; color: #cdf714; margin: 0.5rem 0; }
         .buy-btn { background: #add10d; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
