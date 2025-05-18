@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bits & Bytes Tech Store</title>
+    <title>Catalogue - Bits & Bytes Tech Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body { font-family: Arial, sans-serif; margin: 0; background: #1d04ad; }
@@ -18,15 +18,12 @@
             display: flex; 
             flex-wrap: wrap; 
             gap: 2rem; 
-            justify-content: center; /* Center products horizontally */
+            justify-content: center;
         }
         .product { background: #3f32f7; border: 1px solid #fff; border-radius: 6px; padding: 1rem; width: 220px; text-align: center; }
         .product img { width: 120px; height: 120px; object-fit: contain; }
         .product h3 { margin: 0.5rem 0; color: #cdf714; }
-        .container h2 { 
-            color: #cdf714; 
-            text-align: center; /* Center the heading */
-        }
+        .container h2 { color: #cdf714; text-align: center; }
         .product p { color: #cdf714; }
         .product .price { font-weight: bold; color: #cdf714; margin: 0.5rem 0; }
         .buy-btn { background: #add10d; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
@@ -34,7 +31,7 @@
         footer { text-align: center; color: #cdf714; margin: 2rem 0 0 0; }
         .checkout-link {
             position: fixed;
-            right: 340px; /* moved left to clear cart sidebar */
+            right: 340px;
             top: 1.5rem;
             background: #add10d;
             color: #fff;
@@ -44,8 +41,8 @@
             text-decoration: none;
             font-weight: bold;
             transition: background 0.2s;
-            z-index: 2000; /* ensure above cart/sidebar */
-            display: none; /* hide by default, show via JS if cart not empty */
+            z-index: 2000;
+            display: none;
         }
         .checkout-link.visible {
             display: inline-block;
@@ -55,7 +52,7 @@
         }
         @media (max-width: 1200px) {
             .checkout-link {
-                right: 1rem; /* fallback to right edge on smaller screens */
+                right: 1rem;
                 top: 1rem;
                 padding: 0.5rem 0.7rem;
                 font-size: 0.95rem;
@@ -141,11 +138,13 @@
         <a href="checkout.html" class="checkout-link">Go to Checkout</a>
         <h1>Bits & Bytes Tech Store</h1>
         <p>Your one-stop shop for the latest tech gadgets!</p>
+        <a href="index.html" class="buy-btn" style="position:absolute;left:2rem;top:1.5rem;">Home</a>
     </header>
     <div class="main-content">
         <div class="container">
             <h2>Featured Products</h2>
             <div class="products">
+                <!-- Copy the featured products from index.html here -->
                 <div class="product">
                     <img src="https://www.scan.co.uk/images/products/xlarge/2441289-xl-a.jpg" alt="USB Drive">
                     <h3>64GB USB 3.0 Flash Drive</h3>
@@ -232,12 +231,117 @@
                 </div>
             </div>
         </div>
-        <!-- Catalogue Section -->
-        <!-- Removed catalogue section and replaced with a button -->
-        <div class="container" style="text-align:center;">
-            <a href="catalogue.html" class="buy-btn" style="font-size:1.1rem; padding:0.7rem 2rem; margin-top:2rem; display:inline-block;">View Full Catalogue</a>
+        <div class="container">
+            <h2>Catalogue</h2>
+            <div class="products">
+                <!-- Copy the catalogue products from index.html here -->
+                <div class="product">
+                    <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTJhnwZkll7ACKBCtoFvSV3l-aKWvtOUkC517mh6SHBqBlQRDt4kwIRGPcAKbviIpekXPEuMbBvlYl-sYbaesqmo1Kv0IZ7aWt1tgk7yCc8&usqp=CAc" alt="Raspberry Pi 5">
+                    <h3>Raspberry Pi 5 (8GB)</h3>
+                    <p>Powerful single-board computer for DIY, coding, and electronics projects. 8GB RAM, quad-core CPU.</p>
+                    <div class="price">£74.99</div>
+                    <button class="buy-btn" onclick="addToCart('Raspberry Pi 5 (8GB)', 74.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://i.ebayimg.com/images/g/bYQAAOSwHIZh9nzY/s-l1200.jpg" alt="Kindle Paperwhite">
+                    <h3>Kindle Paperwhite</h3>
+                    <p>6.8" display, adjustable warm light, waterproof, weeks of battery life. Perfect for reading anywhere.</p>
+                    <div class="price">£149.99</div>
+                    <button class="buy-btn" onclick="addToCart('Kindle Paperwhite', 149.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://resource.logitech.com/w_800,c_limit,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/webcams/c920/gallery/c920-gallery-1.png?v=1" alt="Logitech C920 Webcam">
+                    <h3>Logitech C920 HD Webcam</h3>
+                    <p>Full HD 1080p video, stereo audio, autofocus. Ideal for streaming, video calls, and content creation.</p>
+                    <div class="price">£59.99</div>
+                    <button class="buy-btn" onclick="addToCart('Logitech C920 HD Webcam', 59.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/71RGmPM7b-L.jpg" alt="Samsung T7 SSD">
+                    <h3>Samsung T7 Portable SSD 1TB</h3>
+                    <p>Ultra-fast external SSD, USB 3.2, shock-resistant, compact and lightweight for on-the-go storage.</p>
+                    <div class="price">109.99</div>
+                    <button class="buy-btn" onclick="addToCart('Samsung T7 Portable SSD 1TB', 109.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://thepihut.com/cdn/shop/files/arduino-starter-kit-arduino-k000007-41151529713859.jpg?v=1699615943" alt="Arduino Starter Kit">
+                    <h3>Arduino Starter Kit</h3>
+                    <p>Everything you need to get started with Arduino. Includes board, sensors, LEDs, and project book.</p>
+                    <div class="price">£89.99</div>
+                    <button class="buy-btn" onclick="addToCart('Arduino Starter Kit', 89.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/71s9NDno3FL._AC_UF894,1000_QL80_.jpg" alt="Anker Power Bank">
+                    <h3>Anker PowerCore 20000mAh</h3>
+                    <p>High-capacity portable charger, dual USB ports, fast charging for phones and tablets.</p>
+                    <div class="price">£49.99</div>
+                    <button class="buy-btn" onclick="addToCart('Anker PowerCore 20000mAh', 49.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/61D4Z3yKPAL._AC_SL1500_.jpg" alt="Sony WH-1000XM5">
+                    <h3>Sony WH-1000XM5 Headphones</h3>
+                    <p>Industry-leading noise cancelling, 30 hours battery, wireless, touch controls, premium comfort.</p>
+                    <div class="price">£299.00</div>
+                    <button class="buy-btn" onclick="addToCart('Sony WH-1000XM5 Headphones', 299.00)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/41Tii9b6hwL.jpg" alt="Google Nest Hub">
+                    <h3>Google Nest Hub (2nd Gen)</h3>
+                    <p>7" smart display with Google Assistant, control smart home, watch videos, see your calendar.</p>
+                    <div class="price">£89.00</div>
+                    <button class="buy-btn" onclick="addToCart('Google Nest Hub (2nd Gen)', 89.00)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://www.cclonline.com/images/avante/Overview_Archer_AX21_02_large_1596417493325a.jpg?width=1600&height=1600&scale=canvas&trim.threshold=80" alt="TP-Link WiFi 6 Router">
+                    <h3>TP-Link Archer AX55 WiFi 6 Router</h3>
+                    <p>Next-gen WiFi 6, ultra-fast speeds, 4-stream, OFDMA, MU-MIMO, parental controls, easy setup.</p>
+                    <div class="price">£99.99</div>
+                    <button class="buy-btn" onclick="addToCart('TP-Link Archer AX55 WiFi 6 Router', 99.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://res.cloudinary.com/elgato-pwa/image/upload/v1679475550/Products/10GBA9901/above-the-fold/desktop/mk.2-black-01_seyirh.jpg" alt="Elgato Stream Deck">
+                    <h3>Elgato Stream Deck MK.2</h3>
+                    <p>15 customizable LCD keys for streaming, productivity, and automation. Plug and play USB device.</p>
+                    <div class="price">£139.99</div>
+                    <button class="buy-btn" onclick="addToCart('Elgato Stream Deck MK.2', 139.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/71pC69I3lzL._AC_SL1500_.jpg" alt="Philips Hue Starter Kit">
+                    <h3>Philips Hue White & Colour Starter Kit</h3>
+                    <p>Smart lighting kit with 3 bulbs, bridge, and app control. Works with Alexa, Google, Apple HomeKit.</p>
+                    <div class="price">£129.99</div>
+                    <button class="buy-btn" onclick="addToCart('Philips Hue White & Colour Starter Kit', 129.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://m.media-amazon.com/images/I/610OxTXkLwL.jpg" alt="Samsung Galaxy Tab S9">
+                    <h3>Samsung Galaxy Tab S9</h3>
+                    <p>11" AMOLED display, S Pen included, 128GB storage, WiFi, Android 13, ultra-thin and light.</p>
+                    <div class="price">£799.00</div>
+                    <button class="buy-btn" onclick="addToCart('Samsung Galaxy Tab S9', 799.00)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MMMQ3?wid=2000&hei=2000&fmt=jpeg&qlt=95&.v=1645136275935" alt="Apple Magic Mouse">
+                    <h3>Apple Magic Mouse</h3>
+                    <p>Wireless, rechargeable, multi-touch surface. Sleek design for Mac users.</p>
+                    <div class="price">£79.00</div>
+                    <button class="buy-btn" onclick="addToCart('Apple Magic Mouse', 79.00)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://cdn.cs.1worldsync.com/85/01/8501156d-0b84-43fa-96b4-68bdd83f0aad.jpg" alt="WD My Passport 4TB">
+                    <h3>WD My Passport 4TB Portable HDD</h3>
+                    <p>Reliable external hard drive, automatic backup, password protection, USB 3.0.</p>
+                    <div class="price">£99.99</div>
+                    <button class="buy-btn" onclick="addToCart('WD My Passport 4TB Portable HDD', 99.99)">Buy Now</button>
+                </div>
+                <div class="product">
+                    <img src="https://futurefive.co.nz/uploads/story/2024/02/01/61ZtqtvoD2L.webp" alt="Fitbit Charge 6">
+                    <h3>Fitbit Charge 6</h3>
+                    <p>Fitness tracker with heart rate, GPS, sleep tracking, 7-day battery, Google Wallet, notifications.</p>
+                    <div class="price">£139.99</div>
+                    <button class="buy-btn" onclick="addToCart('Fitbit Charge 6', 139.99)">Buy Now</button>
+                </div>
+            </div>
         </div>
-        <!-- End Catalogue Section -->
     </div>
     <div class="cart-sidebar" id="cartSidebar">
         <h3>Shopping List</h3>
@@ -263,7 +367,7 @@
             localStorage.setItem('cart', JSON.stringify(cart));
         }
         function addToCart(name, price) {
-            price = Number(price); // Ensure price is a number
+            price = Number(price);
             let cart = getCart();
             let found = cart.find(item => item.name === name);
             if (found) {
@@ -293,7 +397,6 @@
             let html = '';
             let subtotal = 0;
             cart.forEach(item => {
-                // Defensive: ensure price is a number
                 let price = Number(item.price);
                 html += `<div class="cart-item">
                     <span>${item.name} x${item.qty}</span>
