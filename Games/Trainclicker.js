@@ -293,7 +293,7 @@ function buySteelPlanet() {
 function buyCoalDimension() {
   if (count >= cdCost) {
     incrementTPS(2500000);
-    count -= cdcost;
+    count -= cdCost;
     localStorage.setItem("count", count);
     cdCost *= 1.5;
     cdCost = Math.floor(cdCost);
@@ -311,7 +311,7 @@ function buyCoalDimension() {
 function buySteelDimension() {
   if (count >= sdCost) {
     incrementTPS(5000000);
-    count -= sdcost;
+    count -= sdCost;
     localStorage.setItem("count", count);
     sdCost *= 1.5;
     sdCost = Math.floor(sdCost);
