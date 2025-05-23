@@ -1,5 +1,5 @@
 body { font-family: Arial, sans-serif; margin: 0; background: #1d04ad; }
-header { background: #222; color: #fff; text-align: center; position: fixed; width:100%; top: 0; left: 0; z-index: 1000; height:10vh}
+header { background: #222; color: #fff; text-align: center; position: fixed; width:100%; top: 0; left: 0; z-index: 1000; height:9vh}
 .header-flex { 
     display: flex; 
     justify-content: flex-start; /* Move content to the left */
