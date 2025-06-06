@@ -91,7 +91,7 @@
         </div>
         <div class="checkout-total" id="checkoutTotal"></div>
         <div class="checkout-total" id="grandTotal"></div>
-        <form onsubmit="alert('Thank you for your (pretend) purchase!'); return false;">
+        <form onsubmit="alert('Thank you for your purchase!'); return false;">
             <label for="name">Full Name</label>
             <input type="text" id="name" required>
             <label for="email">Email Address</label>
@@ -148,5 +148,49 @@
             renderCheckout();
         });
     </script>
+    <script>
+        function sendEmail(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Generate a random reference number
+            const referenceNumber = Math.floor(Math.random() * 1000000);
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const payment = document.getElementById('payment').value;
+
+            // Send data to the backend
+            fetch('/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    address,
+                    payment,
+                    referenceNumber,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Thank you for your purchase! Your reference number is ${referenceNumber}.`);
+                    } else {
+                        alert('An error occurred while processing your purchase. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Failed to send email:', error);
+                    alert('An error occurred while processing your purchase. Please try again.');
+                });
+        }
+
+        document.querySelector('form').addEventListener('submit', sendEmail);
+    </script>
 </body>
 </html>
+<script src="server.js"></script>
