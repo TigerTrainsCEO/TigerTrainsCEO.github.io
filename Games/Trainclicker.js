@@ -1,4 +1,17 @@
-//Set variables to beginner prices or use stored variables
+// Trainclicker.js - improved and synced with updated HTML
+
+// Helper: read a numeric value from localStorage, set to default if missing
+function storageCheck(name, amount) {
+  const val = localStorage.getItem(name);
+  if (val === null) {
+    localStorage.setItem(name, String(amount));
+    return amount;
+  }
+  const n = parseInt(val, 10);
+  return Number.isNaN(n) ? 0 : n;
+}
+
+// Initialize game state (numbers only)
 var count = storageCheck("count", 0);
 var tps = storageCheck("tps", 0);
 
@@ -16,7 +29,6 @@ var sp = storageCheck("sp", 0);
 var cd = storageCheck("cd", 0);
 var sd = storageCheck("sd", 0);
 
-
 var upgradeCost = storageCheck("upgradeCost", 20);
 var workerCost = storageCheck("workerCost", 100);
 var coalmineCost = storageCheck("coalmineCost", 500);
@@ -31,406 +43,261 @@ var spCost = storageCheck("spCost", 100000000);
 var cdCost = storageCheck("cdCost", 250000000);
 var sdCost = storageCheck("sdCost", 1000000000);
 
-
-//Update the onscreen variable
-document.getElementById("count").innerHTML = count;
-document.getElementById("frequency").innerHTML = tps;
-
-document.getElementById("upgrades").innerHTML = upgrades;
-document.getElementById("workers").innerHTML = workers;
-document.getElementById("coalmines").innerHTML = coalmines;
-document.getElementById("steelmines").innerHTML = steelmines;
-document.getElementById("factories").innerHTML = factories;
-document.getElementById("banks").innerHTML = banks;
-document.getElementById("coaltemples").innerHTML = coaltemples;
-document.getElementById("steeltemples").innerHTML = steeltemples;
-document.getElementById("wt").innerHTML = wt;
-document.getElementById("cp").innerHTML = cp;
-document.getElementById("sp").innerHTML = sp;
-document.getElementById("cd").innerHTML = cd;
-document.getElementById("sd").innerHTML = sd;
-
-document.getElementById("upgrade-cost").innerHTML = upgradeCost;
-document.getElementById("worker-cost").innerHTML = workerCost;
-document.getElementById("coalmine-cost").innerHTML = coalmineCost;
-document.getElementById("steelmine-cost").innerHTML = steelmineCost;
-document.getElementById("factories-cost").innerHTML = factoriesCost;
-document.getElementById("banks-cost").innerHTML = banksCost;
-document.getElementById("coaltemples-cost").innerHTML = coaltemplesCost;
-document.getElementById("steeltemples-cost").innerHTML = steeltemplesCost;
-document.getElementById("wt-cost").innerHTML = wtCost;
-document.getElementById("cp-cost").innerHTML = cpCost;
-document.getElementById("sp-cost").innerHTML = spCost;
-document.getElementById("cd-cost").innerHTML = cdCost;
-document.getElementById("sd-cost").innerHTML = sdCost;
-
-
-//Returns the value of a stored variable, if the variable has no value it sets it to amount
-function storageCheck(name, amount) {
-  if (localStorage.getItem(name) == null) {
-    localStorage.setItem(name, amount);
-    return localStorage.getItem(name);
-  }
-  else {
-    return localStorage.getItem(name);
-  }
-
+// Formatting helper
+function formatNumber(n) {
+  if (typeof n !== 'number') n = Number(n) || 0;
+  return n.toLocaleString();
 }
 
-//Increases amount of clicks by amount of upgrades
+// Update all DOM elements from state
+function updateDisplay() {
+  document.getElementById("count").innerText = formatNumber(count);
+  document.getElementById("frequency").innerText = formatNumber(tps);
+
+  document.getElementById("upgrades").innerText = formatNumber(upgrades);
+  document.getElementById("workers").innerText = formatNumber(workers);
+  document.getElementById("coalmines").innerText = formatNumber(coalmines);
+  document.getElementById("steelmines").innerText = formatNumber(steelmines);
+  document.getElementById("factories").innerText = formatNumber(factories);
+  document.getElementById("banks").innerText = formatNumber(banks);
+  document.getElementById("coaltemples").innerText = formatNumber(coaltemples);
+  document.getElementById("steeltemples").innerText = formatNumber(steeltemples);
+  document.getElementById("wt").innerText = formatNumber(wt);
+  document.getElementById("cp").innerText = formatNumber(cp);
+  document.getElementById("sp").innerText = formatNumber(sp);
+  document.getElementById("cd").innerText = formatNumber(cd);
+  document.getElementById("sd").innerText = formatNumber(sd);
+
+  document.getElementById("upgrade-cost").innerText = formatNumber(upgradeCost);
+  document.getElementById("worker-cost").innerText = formatNumber(workerCost);
+  document.getElementById("coalmine-cost").innerText = formatNumber(coalmineCost);
+  document.getElementById("steelmine-cost").innerText = formatNumber(steelmineCost);
+  document.getElementById("factories-cost").innerText = formatNumber(factoriesCost);
+  document.getElementById("banks-cost").innerText = formatNumber(banksCost);
+  document.getElementById("coaltemples-cost").innerText = formatNumber(coaltemplesCost);
+  document.getElementById("steeltemples-cost").innerText = formatNumber(steeltemplesCost);
+  document.getElementById("wt-cost").innerText = formatNumber(wtCost);
+  document.getElementById("cp-cost").innerText = formatNumber(cpCost);
+  document.getElementById("sp-cost").innerText = formatNumber(spCost);
+  document.getElementById("cd-cost").innerText = formatNumber(cdCost);
+  document.getElementById("sd-cost").innerText = formatNumber(sdCost);
+}
+
+// Calculate total trains-per-second from owned items
+function calcTPS() {
+  let total = 0;
+  total += workers * 1;
+  total += coalmines * 10;
+  total += steelmines * 100;
+  total += factories * 500;
+  total += banks * 1500;
+  total += coaltemples * 5000;
+  total += steeltemples * 20000;
+  total += wt * 50000;
+  total += cp * 200000;
+  total += sp * 500000;
+  total += cd * 2500000;
+  total += sd * 5000000;
+  return total;
+}
+
+// Primary passive tick (runs every second)
+function passiveTick() {
+  // recompute tps and apply
+  tps = calcTPS();
+  if (tps > 0) {
+    count += tps;
+  }
+  // save count and tps
+  localStorage.setItem('count', String(count));
+  localStorage.setItem('tps', String(tps));
+  updateDisplay();
+}
+
+// Click handler: increases by click power (upgrades)
 function incrementCount() {
-  count = parseInt(count) + parseInt(document.getElementById("upgrades").innerHTML);
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
+  count = Number(count) + Number(upgrades);
+  localStorage.setItem('count', String(count));
+  updateDisplay();
 }
 
-function incrementTPS(amount) {
-  tps = parseInt(tps) + amount;
-  localStorage.setItem("tps", tps);
-  document.getElementById("frequency").innerHTML = tps;
-}
-
-//Check if the amount of Trains exceeds the score
-//If so it increases the amount of upgrades by 1
-//Also increases the cost of the next upgrade
-//And decreases the amount of Trains
+// Purchase functions: attempt to buy, update costs and counts, save state
 function buyUpgrade() {
   if (count >= upgradeCost) {
     count -= upgradeCost;
-    localStorage.setItem("count", count);
-    upgradeCost *= 1.25;
-    upgradeCost = Math.floor(upgradeCost);
-    localStorage.setItem("upgradeCost", upgradeCost);
-    upgrades++;
-    localStorage.setItem("upgrades", upgrades);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("upgrades").innerHTML = upgrades;
-    document.getElementById("upgrade-cost").innerHTML = upgradeCost;
+    upgradeCost = Math.floor(upgradeCost * 1.25);
+    upgrades += 1;
+    persistAndUpdate();
   }
 }
 
 function buyWorker() {
   if (count >= workerCost) {
-    incrementTPS(1);
     count -= workerCost;
-    localStorage.setItem("count", count);
-    workerCost *= 1.5;
-    workerCost = Math.floor(workerCost);
-    localStorage.setItem("workerCost", workerCost);
-    workers++;
-    localStorage.setItem("workers", workers);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("workers").innerHTML = workers;
-    document.getElementById("worker-cost").innerHTML = workerCost;
-
+    workerCost = Math.floor(workerCost * 1.5);
+    workers += 1;
+    persistAndUpdate();
   }
 }
 
 function buyCoalMine() {
   if (count >= coalmineCost) {
-    incrementTPS(10);
     count -= coalmineCost;
-    localStorage.setItem("count", count);
-    coalmineCost *= 1.5;
-    coalmineCost = Math.floor(coalmineCost);
-    localStorage.setItem("coalmineCost", coalmineCost);
-    coalmines++;
-    localStorage.setItem("coalmines", coalmines);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("coalmines").innerHTML = coalmines;
-    document.getElementById("coalmine-cost").innerHTML = coalmineCost;
-
+    coalmineCost = Math.floor(coalmineCost * 1.5);
+    coalmines += 1;
+    persistAndUpdate();
   }
 }
 
 function buySteelMine() {
   if (count >= steelmineCost) {
-    incrementTPS(100);
     count -= steelmineCost;
-    localStorage.setItem("count", count);
-    steelmineCost *= 1.5;
-    steelmineCost = Math.floor(steelmineCost);
-    localStorage.setItem("steelmineCost", steelmineCost);
-    steelmines++;
-    localStorage.setItem("steelmines", steelmines);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("steelmines").innerHTML = steelmines;
-    document.getElementById("steelmine-cost").innerHTML = steelmineCost;
-
+    steelmineCost = Math.floor(steelmineCost * 1.5);
+    steelmines += 1;
+    persistAndUpdate();
   }
 }
 
 function buyFactory() {
   if (count >= factoriesCost) {
-    incrementTPS(500);
     count -= factoriesCost;
-    localStorage.setItem("count", count);
-    factoriesCost *= 1.5;
-    factoriesCost = Math.floor(factoriesCost);
-    localStorage.setItem("factoriesCost", factoriesCost);
-    factories++;
-    localStorage.setItem("factories", factories);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("factories").innerHTML = factories;
-    document.getElementById("factories-cost").innerHTML = factoriesCost;
-
+    factoriesCost = Math.floor(factoriesCost * 1.5);
+    factories += 1;
+    persistAndUpdate();
   }
 }
 
 function buyBank() {
   if (count >= banksCost) {
-    incrementTPS(1500);
     count -= banksCost;
-    localStorage.setItem("count", count);
-    banksCost *= 1.5;
-    banksCost = Math.floor(banksCost);
-    localStorage.setItem("banksCost", banksCost);
-    banks++;
-    localStorage.setItem("banks", banks);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("banks").innerHTML = banks;
-    document.getElementById("banks-cost").innerHTML = banksCost;
-
+    banksCost = Math.floor(banksCost * 1.5);
+    banks += 1;
+    persistAndUpdate();
   }
 }
 
 function buyCoalTemples() {
   if (count >= coaltemplesCost) {
-    incrementTPS(5000);
     count -= coaltemplesCost;
-    localStorage.setItem("count", count);
-    coaltemplesCost *= 1.5;
-    coaltemplesCost = Math.floor(coaltemplesCost);
-    localStorage.setItem("coaltemplesCost", coaltemplesCost);
-    coaltemples++;
-    localStorage.setItem("coaltemples", coaltemples);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("coaltemples").innerHTML = coaltemples;
-    document.getElementById("coaltemples-cost").innerHTML = coaltemplesCost;
-
+    coaltemplesCost = Math.floor(coaltemplesCost * 1.5);
+    coaltemples += 1;
+    persistAndUpdate();
   }
 }
 
 function buySteelTemples() {
   if (count >= steeltemplesCost) {
-    incrementTPS(20000);
     count -= steeltemplesCost;
-    localStorage.setItem("count", count);
-    steeltemplesCost *= 1.5;
-    steeltemplesCost = Math.floor(steeltemplesCost);
-    localStorage.setItem("steeltemplesCost", steeltemplesCost);
-    steeltemples++;
-    localStorage.setItem("steeltemples", steeltemples);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("steeltemples").innerHTML = steeltemples;
-    document.getElementById("steeltemples-cost").innerHTML = steeltemplesCost;
-
+    steeltemplesCost = Math.floor(steeltemplesCost * 1.5);
+    steeltemples += 1;
+    persistAndUpdate();
   }
 }
 
 function buyWizardTower() {
   if (count >= wtCost) {
-    incrementTPS(50000);
     count -= wtCost;
-    localStorage.setItem("count", count);
-    wtCost *= 1.5;
-    wtCost = Math.floor(wtCost);
-    localStorage.setItem("wtCost", wtCost);
-    wt++;
-    localStorage.setItem("wt", wt);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("wt").innerHTML = wt;
-    document.getElementById("wt-cost").innerHTML = wtCost;
-
+    wtCost = Math.floor(wtCost * 1.5);
+    wt += 1;
+    persistAndUpdate();
   }
 }
 
 function buyCoalPlanet() {
   if (count >= cpCost) {
-    incrementTPS(200000);
     count -= cpCost;
-    localStorage.setItem("count", count);
-    cpCost *= 1.5;
-    cpCost = Math.floor(cpCost);
-    localStorage.setItem("cpCost", cpCost);
-    cp++;
-    localStorage.setItem("cp", cp);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("cp").innerHTML = cp;
-    document.getElementById("cp-cost").innerHTML = cpCost;
-
+    cpCost = Math.floor(cpCost * 1.5);
+    cp += 1;
+    persistAndUpdate();
   }
 }
 
 function buySteelPlanet() {
   if (count >= spCost) {
-    incrementTPS(500000);
     count -= spCost;
-    localStorage.setItem("count", count);
-    spCost *= 1.5;
-    spCost = Math.floor(spCost);
-    localStorage.setItem("spCost", spCost);
-    sp++;
-    localStorage.setItem("sp", sp);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("sp").innerHTML = sp;
-    document.getElementById("sp-cost").innerHTML = spCost;
-
+    spCost = Math.floor(spCost * 1.5);
+    sp += 1;
+    persistAndUpdate();
   }
 }
 
 function buyCoalDimension() {
   if (count >= cdCost) {
-    incrementTPS(2500000);
     count -= cdCost;
-    localStorage.setItem("count", count);
-    cdCost *= 1.5;
-    cdCost = Math.floor(cdCost);
-    localStorage.setItem("cdCost", cdCost);
-    cd++;
-    localStorage.setItem("cd", cd);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("cd").innerHTML = cd;
-    document.getElementById("cd-cost").innerHTML = cdCost;
-
+    cdCost = Math.floor(cdCost * 1.5);
+    cd += 1;
+    persistAndUpdate();
   }
 }
 
 function buySteelDimension() {
   if (count >= sdCost) {
-    incrementTPS(5000000);
     count -= sdCost;
-    localStorage.setItem("count", count);
-    sdCost *= 1.5;
-    sdCost = Math.floor(sdCost);
-    localStorage.setItem("sdCost", sdCost);
-    sd++;
-    localStorage.setItem("sd", sd);
-
-    document.getElementById("count").innerHTML = count;
-    document.getElementById("sd").innerHTML = sd;
-    document.getElementById("sd-cost").innerHTML = sdCost;
-
+    sdCost = Math.floor(sdCost * 1.5);
+    sd += 1;
+    persistAndUpdate();
   }
 }
 
-setInterval(passiveTrain, 1000);
-setInterval(passiveCoalMine, 1000);
-setInterval(passiveSteelMine, 1000);
-setInterval(passiveFactories, 1000);
-setInterval(passiveBanks, 1000);
-setInterval(passiveCoalTemples, 1000);
-setInterval(passiveSteelTemples, 1000);
-setInterval(passiveWT, 1000);
-setInterval(passiveCP, 1000);
-setInterval(passiveSP, 1000);
-setInterval(passiveCD, 1000);
-setInterval(passiveSD, 1000);
+// Save current numeric state to localStorage and refresh display
+function persistAndUpdate() {
+  localStorage.setItem('count', String(count));
+  localStorage.setItem('tps', String(tps));
 
-function passiveTrain() {
-  for (let i = 0; i < workers; i++) {
-    count++
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
+  localStorage.setItem('upgrades', String(upgrades));
+  localStorage.setItem('workers', String(workers));
+  localStorage.setItem('coalmines', String(coalmines));
+  localStorage.setItem('steelmines', String(steelmines));
+  localStorage.setItem('factories', String(factories));
+  localStorage.setItem('banks', String(banks));
+  localStorage.setItem('coaltemples', String(coaltemples));
+  localStorage.setItem('steeltemples', String(steeltemples));
+  localStorage.setItem('wt', String(wt));
+  localStorage.setItem('cp', String(cp));
+  localStorage.setItem('sp', String(sp));
+  localStorage.setItem('cd', String(cd));
+  localStorage.setItem('sd', String(sd));
+
+  localStorage.setItem('upgradeCost', String(upgradeCost));
+  localStorage.setItem('workerCost', String(workerCost));
+  localStorage.setItem('coalmineCost', String(coalmineCost));
+  localStorage.setItem('steelmineCost', String(steelmineCost));
+  localStorage.setItem('factoriesCost', String(factoriesCost));
+  localStorage.setItem('banksCost', String(banksCost));
+  localStorage.setItem('coaltemplesCost', String(coaltemplesCost));
+  localStorage.setItem('steeltemplesCost', String(steeltemplesCost));
+  localStorage.setItem('wtCost', String(wtCost));
+  localStorage.setItem('cpCost', String(cpCost));
+  localStorage.setItem('spCost', String(spCost));
+  localStorage.setItem('cdCost', String(cdCost));
+  localStorage.setItem('sdCost', String(sdCost));
+
+  // recompute tps and update UI
+  tps = calcTPS();
+  localStorage.setItem('tps', String(tps));
+  updateDisplay();
 }
 
-function passiveCoalMine() {
-  for (let i = 0; i < coalmines; i++) {
-    count = parseInt(count) + 10;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
+// Manual save and reset
+function saveGame() {
+  persistAndUpdate();
+  alert('Game saved.');
 }
 
-function passiveSteelMine() {
-  for (let i = 0; i < steelmines; i++) {
-    count = parseInt(count) + 100;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
+function resetGame() {
+  if (!confirm('Reset the game? This will clear your progress.')) return;
+  const defaults = {
+    count: 0, tps: 0, upgrades: 1, workers: 0, coalmines: 0, steelmines: 0, factories: 0, banks: 0,
+    coaltemples: 0, steeltemples: 0, wt: 0, cp: 0, sp: 0, cd: 0, sd: 0,
+    upgradeCost: 20, workerCost: 100, coalmineCost: 500, steelmineCost: 1000, factoriesCost: 5000,
+    banksCost: 20000, coaltemplesCost: 50000, steeltemplesCost: 250000, wtCost: 1000000,
+    cpCost: 25000000, spCost: 100000000, cdCost: 250000000, sdCost: 1000000000
+  };
+  for (const k in defaults) localStorage.setItem(k, String(defaults[k]));
+  location.reload();
 }
 
-function passiveFactories() {
-  for (let i = 0; i < factories; i++) {
-    count = parseInt(count) + 500;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
+// Start passive tick
+updateDisplay();
+setInterval(passiveTick, 1000);
 
-function passiveBanks() {
-  for (let i = 0; i < banks; i++) {
-    count = parseInt(count) + 1500;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
-
-function passiveCoalTemples() {
-  for (let i = 0; i < coaltemples; i++) {
-    count = parseInt(count) + 5000;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
-
-function passiveSteelTemples() {
-  for (let i = 0; i < steeltemples; i++) {
-    count = parseInt(count) + 20000;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
-
-function passiveWT() {
-  for (let i = 0; i < wt; i++) {
-    count = parseInt(count) + 50000;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
-
-function passiveCP() {
-  for (let i = 0; i < cp; i++) {
-    count = parseInt(count) + 200000;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
-
-function passiveSP() {
-  for (let i = 0; i < sp; i++) {
-    count = parseInt(count) + 500000;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
-
-function passiveCD() {
-  for (let i = 0; i < sp; i++) {
-    count = parseInt(count) + 2500000;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
-
-function passiveSD() {
-  for (let i = 0; i < sp; i++) {
-    count = parseInt(count) + 5000000;
-  }
-  localStorage.setItem("count", count);
-  document.getElementById("count").innerHTML = count;
-}
