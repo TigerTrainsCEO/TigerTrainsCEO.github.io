@@ -10,91 +10,101 @@
 
 <body>
     <h1>Train Clicker</h1>
-    <img id="train" src="Train.png" onclick="incrementCount()">
-    <p id="click-count">Trains: <span id="count"></span></p>
-    <p id="train-freq">tps: <span id="frequency"></span></p>
 
-    <!-- TPS breakdown panel -->
-    <div id="tps-panel" style="margin: 1rem 0; padding: 0.5rem; border: 1px solid #ccc; max-width: 60vw;">
-      <h2 style="margin:0 0 0.5rem 0; font-size:1.1rem;">TPS Breakdown</h2>
-      <div id="tps-breakdown">
-        <p>Workers: <span id="tps-workers"></span> tps</p>
-        <p>Coal Mines: <span id="tps-coalmines"></span> tps</p>
-        <p>Steel Mines: <span id="tps-steelmines"></span> tps</p>
-        <p>Factories: <span id="tps-factories"></span> tps</p>
-        <p>Banks: <span id="tps-banks"></span> tps</p>
-        <p>Coal Temples: <span id="tps-coaltemples"></span> tps</p>
-        <p>Steel Temples: <span id="tps-steeltemples"></span> tps</p>
-        <p>Wizard Towers: <span id="tps-wt"></span> tps</p>
-        <p>Coal Planets: <span id="tps-cp"></span> tps</p>
-        <p>Steel Planets: <span id="tps-sp"></span> tps</p>
-        <p>Coal Dimensions: <span id="tps-cd"></span> tps</p>
-        <p>Steel Dimensions: <span id="tps-sd"></span> tps</p>
-        <hr>
-        <p><strong>Total: <span id="tps-total"></span> tps</strong></p>
+    <!-- Layout: main content + right-hand TPS box -->
+    <div id="game-layout" style="display:flex; gap:1rem; align-items:flex-start; justify-content:center;">
+
+      <!-- Left: main game area (flexible) -->
+      <div id="main-area" style="flex:1; max-width:60vw;">
+        <img id="train" src="Train.png" onclick="incrementCount()" style="max-width:220px; height:auto; display:block; margin-bottom:0.5rem;">
+        <p id="click-count">Trains: <span id="count"></span></p>
+        <p id="train-freq">tps: <span id="frequency"></span></p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem;">
+
+            <div class="button-container">
+                <button onclick="buyUpgrade()">Buy Upgrade <span id="upgrade-cost"> </span></button>
+                <p id="upgrade-count">Click Power: <span id="upgrades"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buyWorker()">Buy Worker <span id="worker-cost"></span> </button>
+                <p id="worker-count">Workers: <span id="workers"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buyCoalMine()">Buy Coal Mine <span id="coalmine-cost"></span></button>
+                <p id="coalmine-count">Coal Mines: <span id="coalmines"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buySteelMine()">Buy Steel Mine <span id="steelmine-cost"></span></button>
+                <p id="steelmine-count">Steel Mines: <span id="steelmines"></span></p>
+            </div>
+            <div class="button-container">
+              <button onclick="buyFactory()">Buy Factory <span id="factories-cost"></span></button>
+              <p id="factory-count">Factories: <span id="factories"></span></p>
+            </div>
+            <div class="button-container">
+              <button onclick="buyBank()">Buy Bank <span id="banks-cost"></span></button>
+              <p id="bank-count">Banks: <span id="banks"></span></p>
+            </div>
+            <div class="button-container">
+              <button onclick="buyCoalTemples()">Buy Coal Temple <span id="coaltemples-cost"></span></button>
+              <p id="coaltemples-count">Coal Temples: <span id="coaltemples"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buySteelTemples()">Buy Steel Temple <span id="steeltemples-cost"></span></button>
+                <p id="steeltemples-count">Steel Temples: <span id="steeltemples"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buyWizardTower()">Buy Wizard Tower <span id="wt-cost"></span></button>
+                <p id="wt-count">Wizard Towers: <span id="wt"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buyCoalPlanet()">Buy Coal Planet <span id="cp-cost"></span></button>
+                <p id="cp-count">Coal Planets: <span id="cp"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buySteelPlanet()">Buy Steel Planet <span id="sp-cost"></span></button>
+                <p id="sp-count">Steel Planets: <span id="sp"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buyCoalDimension()">Buy Coal Dimension <span id="cd-cost"></span></button>
+                <p id="cd-count">Coal Dimensions: <span id="cd"></span></p>
+            </div>
+            <div class="button-container">
+                <button onclick="buySteelDimension()">Buy Steel Dimension <span id="sd-cost"></span></button>
+                <p id="sd-count">Steel Dimensions: <span id="sd"></span></p>
+            </div>
+        </div>
+
+        <div style="margin-top: 1rem; display:flex; gap:0.5rem; align-items:center;">
+            <button class="page-button" onclick="saveGame()">Save Game</button>
+            <button class="page-button" onclick="resetGame()">Reset Game</button>
+            <a class="page-button" href="../index.html">Home Page</a>
+        </div>
       </div>
+
+      <!-- Right: smaller TPS box fixed to the right-hand side -->
+      <div id="tps-panel" style="width:220px; position:fixed; right:1rem; top:4rem; padding:0.6rem; border:1px solid #ccc; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin:0 0 0.5rem 0; font-size:1rem;">TPS Breakdown</h3>
+        <div id="tps-breakdown" style="font-size:0.9rem; line-height:1.25rem;">
+          <div>Workers: <span id="tps-workers"></span></div>
+          <div>Coal Mines: <span id="tps-coalmines"></span></div>
+          <div>Steel Mines: <span id="tps-steelmines"></span></div>
+          <div>Factories: <span id="tps-factories"></span></div>
+          <div>Banks: <span id="tps-banks"></span></div>
+          <div>Coal Temples: <span id="tps-coaltemples"></span></div>
+          <div>Steel Temples: <span id="tps-steeltemples"></span></div>
+          <div>Wizard Towers: <span id="tps-wt"></span></div>
+          <div>Coal Planets: <span id="tps-cp"></span></div>
+          <div>Steel Planets: <span id="tps-sp"></span></div>
+          <div>Coal Dimensions: <span id="tps-cd"></span></div>
+          <div>Steel Dimensions: <span id="tps-sd"></span></div>
+          <hr style="margin:0.5rem 0">
+          <div style="font-weight:700;">Total: <span id="tps-total"></span></div>
+        </div>
+      </div>
+
     </div>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); width: 60vw;">
-
-        <div class="button-container">
-            <button onclick="buyUpgrade()">Buy Upgrade <span id="upgrade-cost"> </span></button>
-            <p id="upgrade-count">Click Power: <span id="upgrades"></span></p>
-        </div>
-        <div class="button-container">
-            <button onclick="buyWorker()">Buy Worker <span id="worker-cost"></span> </button>
-            <p id="worker-count">Workers: <span id="workers"></span></p>
-        </div>
-        <div class="button-container">
-            <button onclick="buyCoalMine()">Buy Coal Mine <span id="coalmine-cost"></span></button>
-            <p id="coalmine-count">Coal Mines: <span id="coalmines"></span></p>
-        </div>
-        <div class="button-container">
-            <button onclick="buySteelMine()">Buy Steel Mine <span id="steelmine-cost"></span></button>
-            <p id="steelmine-count">Steel Mines: <span id="steelmines"></span></p>
-        </div>
-          <div class="button-container">
-          <button onclick="buyFactory()">Buy Factory <span id="factories-cost"></span></button>
-          <p id="factory-count">Factories: <span id="factories"></span></p>
-      </div>
-     <div class="button-container">
-          <button onclick="buyBank()">Buy Bank <span id="banks-cost"></span></button>
-          <p id="bank-count">Banks: <span id="banks"></span></p>
-      </div>
-        <div class="button-container">
-          <button onclick="buyCoalTemples()">Buy Coal Temple <span id="coaltemples-cost"></span></button>
-          <p id="coaltemples-count">Coal Temples: <span id="coaltemples"></span></p>
-        </div>
-        <div class="button-container">
-            <button onclick="buySteelTemples()">Buy Steel Temple <span id="steeltemples-cost"></span></button>
-            <p id="steeltemples-count">Steel Temples: <span id="steeltemples"></span></p>
-          </div>
-          <div class="button-container">
-            <button onclick="buyWizardTower()">Buy Wizard Tower <span id="wt-cost"></span></button>
-            <p id="wt-count">Wizard Towers: <span id="wt"></span></p>
-          </div>
-          <div class="button-container">
-            <button onclick="buyCoalPlanet()">Buy Coal Planet <span id="cp-cost"></span></button>
-            <p id="cp-count">Coal Planets: <span id="cp"></span></p>
-          </div>
-          <div class="button-container">
-            <button onclick="buySteelPlanet()">Buy Steel Planet <span id="sp-cost"></span></button>
-            <p id="sp-count">Steel Planets: <span id="sp"></span></p>
-          </div>
-          <div class="button-container">
-            <button onclick="buyCoalDimension()">Buy Coal Dimension <span id="cd-cost"></span></button>
-            <p id="cd-count">Coal Dimensions: <span id="cd"></span></p>
-          </div>
-          <div class="button-container">
-            <button onclick="buySteelDimension()">Buy Steel Dimension <span id="sd-cost"></span></button>
-            <p id="sd-count">Steel Dimensions: <span id="sd"></span></p>
-          </div>
-    </div>
-<div style="margin-top: 1rem;">
-    <button class="page-button" onclick="saveGame()">Save Game</button>
-    <button class="page-button" onclick="resetGame()">Reset Game</button>
-    <a class="page-button" href="../index.html">Home Page</a>
-</div>
 
     <script src="Trainclicker.js"></script>
 </body>
