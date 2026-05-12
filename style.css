@@ -1,21 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: #0EAD69;
+  background: linear-gradient(135deg, #0EAD69 0%, #06A355 50%, #04883F 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
   width: 100vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(3, 80, 150);
 }
 
 a {
   font-size: 35px;
   text-decoration: none;
   color: white;
-  background-color: rgb(3, 80, 150);
+  background: linear-gradient(135deg, rgb(3, 80, 150) 0%, rgb(31, 81, 255) 100%);
   padding-inline: 10px;
   padding-block: 3px;
-  border-radius: 5px;
-  transition: .15s;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(3, 80, 150, 0.3);
+  display: inline-block;
 }
 
 a:hover {
-  background-color: rgb(31, 81, 255);
+  background: linear-gradient(135deg, rgb(31, 81, 255) 0%, rgb(55, 110, 255) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(31, 81, 255, 0.4);
 }
 
 h1 {
@@ -23,6 +37,7 @@ h1 {
   color: rgb(3, 80, 150);
   margin-top: 0px;
   margin-bottom: 0px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #underlined {
@@ -33,6 +48,87 @@ h2 {
   font-size: 60px;
   color: rgb(3, 80, 150);
   text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-inline: 30px;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.dropdown {
+  position: relative;
+  display: flex;
+}
+
+.dropdown > button {
+  background: linear-gradient(135deg, rgb(3, 80, 150) 0%, rgb(31, 81, 255) 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(3, 80, 150, 0.3);
+}
+
+.dropdown > button:hover {
+  background: linear-gradient(135deg, rgb(31, 81, 255) 0%, rgb(55, 110, 255) 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(31, 81, 255, 0.4);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: -100%;
+  background: linear-gradient(135deg, rgba(3, 80, 150, 0.95) 0%, rgba(31, 81, 255, 0.95) 100%);
+  box-shadow: 0px 12px 24px 0px rgba(0, 0, 0, 0.3);
+  padding: 12px 16px;
+  z-index: 1;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-content a {
+  margin: 5px 0;
+  font-size: 20px;
+  padding: 10px 15px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.dropdown-content a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(5px);
 }
 
 #hero-container {
@@ -40,23 +136,42 @@ h2 {
   flex-direction: column;
   align-items: center;
   margin-bottom: 35px;
+  margin-top: 30px;
 }
 
 #train-hero {
   width: 85vw;
   max-width: 700px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+#train-hero:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
 }
 
 #train {
   width: 85vw;
   max-width: 700px;
+  border-radius: 15px;
+  transition: 0.1s;
+}
+
+#train:active {
+  transform: translateY(4px);
+}
+
+#train-freq {
+  font-size: 25px;
+  color: rgb(3, 80, 150);
 }
 
 .page-list {
   display: flex;
   flex-direction: row;
   justify-content: center;
-
 }
 
 .page-button {
@@ -70,6 +185,7 @@ h2 {
 p {
   font-size: 40px;
   color: rgb(3, 80, 150);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .calculator-grid {
@@ -83,39 +199,35 @@ p {
 }
 
 button {
-  border-radius: 5px;
+  border-radius: 8px;
   border: none;
-
-  background-color: rgb(3, 80, 150);
+  background: linear-gradient(135deg, rgb(3, 80, 150) 0%, rgb(31, 81, 255) 100%);
   color: white;
-
   font-size: 30px;
   font-weight: bold;
-  transition: .15s;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 15px rgba(3, 80, 150, 0.3);
+  cursor: pointer;
 }
 
 button:hover {
-  background-color: rgb(31, 81, 255);
+  background: linear-gradient(135deg, rgb(31, 81, 255) 0%, rgb(55, 110, 255) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(31, 81, 255, 0.4);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 #input {
   grid-column: 1 / 4;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   padding: 10px;
   font-size: 30px;
-}
-
-#train {
-  transition: 0.1s;
-}
-
-#train:active {
-  transform: translateY(4px);
-}
-
-#train-freq {
-  font-size: 25px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .button-container {
@@ -124,15 +236,6 @@ button:hover {
 
 #click-count {
   margin-block-end: 15px;
-}
-
-.page-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-inline: 30px;
 }
 
 .page-button-calculatorhome {
