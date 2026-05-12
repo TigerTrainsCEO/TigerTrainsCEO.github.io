@@ -22,7 +22,7 @@
       p { margin: 0.5rem 0; }
 
       /* Purchase grid and buttons */
-      .button-container { display:flex; flex-direction:column; gap:0.35rem; }
+      .button-container { display:flex; flex-direction:column; gap:0.9rem; }
       .button-container button {
         display:block;
         width:100%;             /* keep buttons inside their grid cell */
@@ -35,6 +35,8 @@
         border: none;
         background: #0b4f81;   /* fallback color if site CSS differs */
         color: #fff;
+        /* a little extra spacing around each button for clarity */
+        margin: 0.2rem 0;
       }
 
       /* Ensure the small page buttons (save/reset/home) look right */
@@ -76,7 +78,7 @@
         <p id="click-count">Trains: <span id="count"></span></p>
         <p id="train-freq">tps: <span id="frequency"></span></p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem;">
 
             <div class="button-container">
                 <button onclick="buyUpgrade()">Buy Upgrade <span id="upgrade-cost"> </span></button>
