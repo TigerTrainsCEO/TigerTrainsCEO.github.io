@@ -11,7 +11,7 @@
 <body>
     <h1>Train Clicker</h1>
 
-    <!-- Layout: main content + right-hand TPS box -->
+    <!-- Layout: main content + right-hand TPS area (not boxed; bordered) -->
     <div id="game-layout" style="display:flex; gap:1rem; align-items:flex-start; justify-content:center;">
 
       <!-- Left: main game area (flexible) -->
@@ -83,22 +83,22 @@
         </div>
       </div>
 
-      <!-- Right: smaller TPS box fixed to the right-hand side (padding removed) -->
-      <div id="tps-panel" style="width:220px; position:fixed; right:1rem; top:4rem; border:1px solid #ccc; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
-        <h3 style="margin:0 0 0.5rem 0; font-size:1rem;">TPS Breakdown</h3>
-        <div id="tps-breakdown" style="font-size:0.9rem; line-height:1.25rem;">
-          <div>Workers: <span id="tps-workers"></span></div>
-          <div>Coal Mines: <span id="tps-coalmines"></span></div>
-          <div>Steel Mines: <span id="tps-steelmines"></span></div>
-          <div>Factories: <span id="tps-factories"></span></div>
-          <div>Banks: <span id="tps-banks"></span></div>
-          <div>Coal Temples: <span id="tps-coaltemples"></span></div>
-          <div>Steel Temples: <span id="tps-steeltemples"></span></div>
-          <div>Wizard Towers: <span id="tps-wt"></span></div>
-          <div>Coal Planets: <span id="tps-cp"></span></div>
-          <div>Steel Planets: <span id="tps-sp"></span></div>
-          <div>Coal Dimensions: <span id="tps-cd"></span></div>
-          <div>Steel Dimensions: <span id="tps-sd"></span></div>
+      <!-- Right: TPS area (not a box; has border only). Border color will be synced to button color via JS -->
+      <div id="tps-panel" style="width:280px; margin-left:1rem; border:1px solid; background:transparent; box-shadow:none; font-size:1rem;">
+        <h3 style="margin:0 0 0.5rem 0; font-size:1.05rem;">TPS Breakdown</h3>
+        <div id="tps-breakdown" style="font-size:1rem; line-height:1.35rem;">
+          <div data-key="workers">Workers: <span id="tps-workers"></span></div>
+          <div data-key="coalmines">Coal Mines: <span id="tps-coalmines"></span></div>
+          <div data-key="steelmines">Steel Mines: <span id="tps-steelmines"></span></div>
+          <div data-key="factories">Factories: <span id="tps-factories"></span></div>
+          <div data-key="banks">Banks: <span id="tps-banks"></span></div>
+          <div data-key="coaltemples">Coal Temples: <span id="tps-coaltemples"></span></div>
+          <div data-key="steeltemples">Steel Temples: <span id="tps-steeltemples"></span></div>
+          <div data-key="wt">Wizard Towers: <span id="tps-wt"></span></div>
+          <div data-key="cp">Coal Planets: <span id="tps-cp"></span></div>
+          <div data-key="sp">Steel Planets: <span id="tps-sp"></span></div>
+          <div data-key="cd">Coal Dimensions: <span id="tps-cd"></span></div>
+          <div data-key="sd">Steel Dimensions: <span id="tps-sd"></span></div>
           <hr style="margin:0.5rem 0">
           <div style="font-weight:700;">Total: <span id="tps-total"></span></div>
         </div>

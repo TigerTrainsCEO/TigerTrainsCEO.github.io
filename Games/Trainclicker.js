@@ -1,4 +1,4 @@
-// Trainclicker.js - improved and synced with updated HTML
+// Trainclicker.js - updated: hide zero TPS rows and sync border color to button color
 
 // Helper: read a numeric value from localStorage, set to default if missing
 function storageCheck(name, amount) {
@@ -104,21 +104,52 @@ function updateDisplay() {
   document.getElementById("cd-cost").innerText = formatNumber(cdCost);
   document.getElementById("sd-cost").innerText = formatNumber(sdCost);
 
-  // TPS breakdown UI
+  // TPS breakdown UI: hide rows with zero contribution
   const b = calcTPSBreakdown();
-  document.getElementById('tps-workers').innerText = formatNumber(b.workers);
-  document.getElementById('tps-coalmines').innerText = formatNumber(b.coalmines);
-  document.getElementById('tps-steelmines').innerText = formatNumber(b.steelmines);
-  document.getElementById('tps-factories').innerText = formatNumber(b.factories);
-  document.getElementById('tps-banks').innerText = formatNumber(b.banks);
-  document.getElementById('tps-coaltemples').innerText = formatNumber(b.coaltemples);
-  document.getElementById('tps-steeltemples').innerText = formatNumber(b.steeltemples);
-  document.getElementById('tps-wt').innerText = formatNumber(b.wt);
-  document.getElementById('tps-cp').innerText = formatNumber(b.cp);
-  document.getElementById('tps-sp').innerText = formatNumber(b.sp);
-  document.getElementById('tps-cd').innerText = formatNumber(b.cd);
-  document.getElementById('tps-sd').innerText = formatNumber(b.sd);
+  const map = {
+    workers: 'tps-workers',
+    coalmines: 'tps-coalmines',
+    steelmines: 'tps-steelmines',
+    factories: 'tps-factories',
+    banks: 'tps-banks',
+    coaltemples: 'tps-coaltemples',
+    steeltemples: 'tps-steeltemples',
+    wt: 'tps-wt',
+    cp: 'tps-cp',
+    sp: 'tps-sp',
+    cd: 'tps-cd',
+    sd: 'tps-sd'
+  };
+
+  for (const key in map) {
+    const spanId = map[key];
+    const el = document.getElementById(spanId);
+    if (!el) continue;
+    const parent = el.parentElement;
+    if (b[key] === 0) {
+      parent.style.display = 'none';
+    } else {
+      parent.style.display = '';
+      el.innerText = formatNumber(b[key]);
+    }
+  }
+
+  // total always visible
   document.getElementById('tps-total').innerText = formatNumber(b.total);
+
+  // Sync border color of the TPS area with button background color (first .page-button or button)
+  try {
+    let btn = document.querySelector('.page-button');
+    if (!btn) btn = document.querySelector('button');
+    if (btn) {
+      const style = window.getComputedStyle(btn);
+      // try backgroundColor first, fallback to color
+      const bg = style.backgroundColor || style.color;
+      if (bg) document.getElementById('tps-panel').style.borderColor = bg;
+    }
+  } catch (e) {
+    // ignore
+  }
 }
 
 // Primary passive tick (runs every second)
