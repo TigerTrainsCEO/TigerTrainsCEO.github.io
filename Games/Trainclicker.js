@@ -49,6 +49,28 @@ function formatNumber(n) {
   return n.toLocaleString();
 }
 
+// Calculate per-item TPS contributions and total
+function calcTPSBreakdown() {
+  const breakdown = {
+    workers: workers * 1,
+    coalmines: coalmines * 10,
+    steelmines: steelmines * 100,
+    factories: factories * 500,
+    banks: banks * 1500,
+    coaltemples: coaltemples * 5000,
+    steeltemples: steeltemples * 20000,
+    wt: wt * 50000,
+    cp: cp * 200000,
+    sp: sp * 500000,
+    cd: cd * 2500000,
+    sd: sd * 5000000
+  };
+  let total = 0;
+  for (const k in breakdown) total += breakdown[k];
+  breakdown.total = total;
+  return breakdown;
+}
+
 // Update all DOM elements from state
 function updateDisplay() {
   document.getElementById("count").innerText = formatNumber(count);
@@ -81,30 +103,29 @@ function updateDisplay() {
   document.getElementById("sp-cost").innerText = formatNumber(spCost);
   document.getElementById("cd-cost").innerText = formatNumber(cdCost);
   document.getElementById("sd-cost").innerText = formatNumber(sdCost);
-}
 
-// Calculate total trains-per-second from owned items
-function calcTPS() {
-  let total = 0;
-  total += workers * 1;
-  total += coalmines * 10;
-  total += steelmines * 100;
-  total += factories * 500;
-  total += banks * 1500;
-  total += coaltemples * 5000;
-  total += steeltemples * 20000;
-  total += wt * 50000;
-  total += cp * 200000;
-  total += sp * 500000;
-  total += cd * 2500000;
-  total += sd * 5000000;
-  return total;
+  // TPS breakdown UI
+  const b = calcTPSBreakdown();
+  document.getElementById('tps-workers').innerText = formatNumber(b.workers);
+  document.getElementById('tps-coalmines').innerText = formatNumber(b.coalmines);
+  document.getElementById('tps-steelmines').innerText = formatNumber(b.steelmines);
+  document.getElementById('tps-factories').innerText = formatNumber(b.factories);
+  document.getElementById('tps-banks').innerText = formatNumber(b.banks);
+  document.getElementById('tps-coaltemples').innerText = formatNumber(b.coaltemples);
+  document.getElementById('tps-steeltemples').innerText = formatNumber(b.steeltemples);
+  document.getElementById('tps-wt').innerText = formatNumber(b.wt);
+  document.getElementById('tps-cp').innerText = formatNumber(b.cp);
+  document.getElementById('tps-sp').innerText = formatNumber(b.sp);
+  document.getElementById('tps-cd').innerText = formatNumber(b.cd);
+  document.getElementById('tps-sd').innerText = formatNumber(b.sd);
+  document.getElementById('tps-total').innerText = formatNumber(b.total);
 }
 
 // Primary passive tick (runs every second)
 function passiveTick() {
   // recompute tps and apply
-  tps = calcTPS();
+  const breakdown = calcTPSBreakdown();
+  tps = breakdown.total;
   if (tps > 0) {
     count += tps;
   }
@@ -273,7 +294,8 @@ function persistAndUpdate() {
   localStorage.setItem('sdCost', String(sdCost));
 
   // recompute tps and update UI
-  tps = calcTPS();
+  const b = calcTPSBreakdown();
+  tps = b.total;
   localStorage.setItem('tps', String(tps));
   updateDisplay();
 }
@@ -300,4 +322,3 @@ function resetGame() {
 // Start passive tick
 updateDisplay();
 setInterval(passiveTick, 1000);
-
