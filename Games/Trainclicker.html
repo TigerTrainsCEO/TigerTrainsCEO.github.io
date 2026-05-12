@@ -8,7 +8,7 @@
     <link href="../style.css" rel="stylesheet" type="text/css" />
     <style>
       /* Local layout & style overrides for Trainclicker page */
-      html,body{height:100%;}
+      html,body{height:100%}
       body{
         font-family: Georgia, 'Times New Roman', Times, serif;
         background: #05A67B; /* keep site background */
@@ -16,13 +16,15 @@
         margin: 0 1rem;
       }
 
-      /* Make general writing bigger */
-      #main-area { font-size: 1.25rem; }
-      h1 { font-size: 3.5rem; margin: 0.5rem 0; }
+      /* Make general writing bigger but avoid extreme sizes to prevent overlap */
+      #main-area { font-size: 1.05rem; }
+      h1 { font-size: 3rem; margin: 0.5rem 0; }
       p { margin: 0.5rem 0; }
 
       /* Purchase grid and buttons */
-      .button-container { display:flex; flex-direction:column; gap:0.9rem; }
+      .purchase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; align-items:start; grid-auto-rows: minmax(80px, auto); }
+
+      .button-container { display:flex; flex-direction:column; gap:0.6rem; min-height: 88px; }
       .button-container button {
         display:block;
         width:100%;             /* keep buttons inside their grid cell */
@@ -37,7 +39,9 @@
         color: #fff;
         /* a little extra spacing around each button for clarity */
         margin: 0.2rem 0;
+        word-break: break-word;
       }
+      .button-container p { margin:0; font-size:1.05rem; }
 
       /* Ensure the small page buttons (save/reset/home) look right */
       .page-button { padding:0.5rem 0.8rem; font-weight:700; text-decoration:none; color:#fff; background:#0b4f81; border-radius:6px; border:none; }
@@ -62,6 +66,9 @@
       @media (max-width: 900px) {
         #game-layout { flex-direction: column; align-items:stretch; }
         #tps-panel { position: static; width: auto; margin: 1rem 0 0 0; }
+        /* tighten button spacing on small screens */
+        .purchase-grid { gap:1rem; grid-auto-rows: auto; }
+        .button-container { min-height: auto; }
       }
     </style>
 </head>
@@ -78,7 +85,7 @@
         <p id="click-count">Trains: <span id="count"></span></p>
         <p id="train-freq">tps: <span id="frequency"></span></p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem;">
+        <div class="purchase-grid">
 
             <div class="button-container">
                 <button onclick="buyUpgrade()">Buy Upgrade <span id="upgrade-cost"> </span></button>
