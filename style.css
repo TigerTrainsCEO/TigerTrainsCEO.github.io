@@ -49,6 +49,8 @@ h2 {
   color: rgb(3, 80, 150);
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .page-header {
@@ -145,6 +147,7 @@ h2 {
   border-radius: 15px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  border: 5px solid rgb(3, 80, 150);
 }
 
 #train-hero:hover {
@@ -172,20 +175,52 @@ h2 {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .page-button {
   margin-inline: 5px;
 }
 
+.scratch-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.scratch-container iframe {
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.scratch-container iframe:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
 .calculator-container {
-  margin: auto;
+  margin: 30px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: fit-content;
 }
 
 p {
   font-size: 40px;
   color: rgb(3, 80, 150);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 20px;
+  line-height: 1.6;
 }
 
 .calculator-grid {
@@ -228,6 +263,7 @@ button:active {
   font-size: 30px;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
 }
 
 .button-container {
