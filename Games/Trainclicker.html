@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width">
     <title>Train Clicker</title>
     <link href="../style.css" rel="stylesheet" type="text/css" />
+
+    <!-- Aggressive page-specific CSS to prevent overlap and ensure hover works -->
     <style>
-      /* Local layout & style overrides for Trainclicker page */
-      *,*::before,*::after{box-sizing:border-box}
-      html,body{height:100%}
+      /* Strong reset for this page only */
+      #main-area, #main-area * { box-sizing: border-box; }
+
+      html, body { height: 100%; margin: 0; }
       body{
         font-family: Georgia, 'Times New Roman', Times, serif;
         background: #05A67B; /* keep site background */
@@ -17,62 +20,72 @@
         margin: 0 1rem;
       }
 
-      /* Adjusted sizes to prevent overlap */
+      /* Heading and base sizes tuned to avoid pushing layout */
+      h1 { font-size: 2.4rem; margin: 0.45rem 0; }
       #main-area { font-size: 1rem; }
-      h1 { font-size: 2.4rem; margin: 0.5rem 0; }
-      p { margin: 0.45rem 0; }
+      p { margin: 0.4rem 0; }
 
-      /* Purchase grid and buttons - ensure cells reserve enough space */
-      .purchase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; align-items:start; grid-auto-rows: minmax(120px, auto); }
+      /* Purchase grid: reserve vertical space per cell so label and button don't overlap */
+      .purchase-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.6rem;                      /* spacing between cells */
+        align-items: start;               /* stack items at top of each cell */
+        grid-auto-rows: minmax(140px, auto); /* reserve space; prevents overlap */
+      }
 
-      .button-container { display:flex; flex-direction:column; gap:0.5rem; min-height: 120px; }
-      .button-container button {
-        display:block;
-        width:100%;
-        white-space:normal;     /* allow wrapping instead of overflow */
-        padding: 0.45rem 0.8rem;
-        font-weight:700;
-        font-size:0.95rem;
-        border-radius:6px;
+      /* Each grid cell stacks button + label with guaranteed room */
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-height: 140px; /* increase if overlap persists */
+        align-items: stretch;
+      }
+
+      /* Buttons: full width, allow wrapping, consistent visuals */
+      #main-area .purchase-grid .button-container button,
+      #main-area .page-button {
+        width: 100%;
+        display: inline-block;
+        padding: 0.5rem 0.9rem;
+        font-weight: 700;
+        font-size: 1rem;
+        white-space: normal;              /* allow line-wrap (prevents overflow) */
+        word-break: break-word;           /* break long strings (numbers/commas) */
+        overflow-wrap: break-word;
+        border-radius: 6px;
         border: none;
-        background: #0b4f81;   /* fallback color if site CSS differs */
+        background-color: #0b4f81;
         color: #fff;
-        margin: 0.15rem 0;
-        word-break: break-word;
-        transition: background-color 150ms ease, transform 80ms ease;
+        transition: background-color 120ms ease, transform 80ms ease;
+        cursor: pointer;
       }
-      .button-container button:hover,
-      .page-button:hover { background-color: #124f76; transform: translateY(-1px); }
 
-      .button-container p { margin:0; font-size:1rem; line-height:1.15rem; color: #084067 }
-
-      /* Ensure the small page buttons (save/reset/home) look right */
-      .page-button { padding:0.5rem 0.8rem; font-weight:700; text-decoration:none; color:#fff; background:#0b4f81; border-radius:6px; border:none; display:inline-block }
-
-      /* TPS area: not a filled box, slightly larger and thicker border */
-      #tps-panel {
-        width: 320px;
-        margin-left:1rem;
-        border-style: solid;
-        border-width: 3px;      /* thicker border */
-        background: transparent;
-        box-shadow:none;
-        font-size:1.05rem;
-        padding: 0.5rem;        /* small padding retained for readability */
+      /* Hover state: very specific selector so it wins over generic overrides */
+      #main-area .purchase-grid .button-container button:hover,
+      #main-area .page-button:hover {
+        background-color: #124f76;
+        transform: translateY(-1px);
       }
-      #tps-breakdown { font-size:1.05rem; line-height:1.4rem; }
 
-      /* Hide hr lines from looking too heavy on the compact TPS area */
-      #tps-panel hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 0.5rem 0; }
+      /* Labels under buttons — keep them modest so they don't overflow */
+      #main-area .button-container p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.15;
+      }
 
-      /* Responsive: move TPS under main area on small screens */
+      /* TPS panel safe positioning for small screens */
+      #tps-panel { z-index: 1; }
+
+      /* Small-screen adjustments */
       @media (max-width: 900px) {
-        #game-layout { flex-direction: column; align-items:stretch; }
+        #game-layout { flex-direction: column; align-items: stretch; }
         #tps-panel { position: static; width: auto; margin: 1rem 0 0 0; }
-        /* tighten button spacing on small screens */
-        .purchase-grid { gap:1rem; grid-auto-rows: auto; }
+        .purchase-grid { gap: 1rem; grid-auto-rows: auto; }
         .button-container { min-height: auto; }
-        h1 { font-size: 2rem; }
+        #main-area h1 { font-size: 2rem; }
       }
     </style>
 </head>
