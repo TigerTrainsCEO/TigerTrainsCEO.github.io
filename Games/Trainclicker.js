@@ -1,4 +1,5 @@
 // Trainclicker.js - updated: hide zero TPS rows and sync border color to button color
+// (no behavior changes required for this change; keep border-color sync working)
 
 // Helper: read a numeric value from localStorage, set to default if missing
 function storageCheck(name, amount) {

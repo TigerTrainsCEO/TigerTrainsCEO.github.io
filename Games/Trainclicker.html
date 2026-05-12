@@ -6,6 +6,62 @@
     <meta name="viewport" content="width=device-width">
     <title>Train Clicker</title>
     <link href="../style.css" rel="stylesheet" type="text/css" />
+    <style>
+      /* Local layout & style overrides for Trainclicker page */
+      html,body{height:100%;}
+      body{
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        background: #05A67B; /* keep site background */
+        color: #063A6A;
+        margin: 0 1rem;
+      }
+
+      /* Make general writing bigger */
+      #main-area { font-size: 1.25rem; }
+      h1 { font-size: 3.5rem; margin: 0.5rem 0; }
+      p { margin: 0.5rem 0; }
+
+      /* Purchase grid and buttons */
+      .button-container { display:flex; flex-direction:column; gap:0.35rem; }
+      .button-container button {
+        display:block;
+        width:100%;             /* keep buttons inside their grid cell */
+        white-space:normal;     /* allow wrapping instead of overflow */
+        box-sizing:border-box;
+        padding: 0.5rem 0.9rem;
+        font-weight:700;
+        font-size:1rem;
+        border-radius:6px;
+        border: none;
+        background: #0b4f81;   /* fallback color if site CSS differs */
+        color: #fff;
+      }
+
+      /* Ensure the small page buttons (save/reset/home) look right */
+      .page-button { padding:0.5rem 0.8rem; font-weight:700; text-decoration:none; color:#fff; background:#0b4f81; border-radius:6px; border:none; }
+
+      /* TPS area: not a filled box, slightly larger and thicker border */
+      #tps-panel {
+        width: 320px;
+        margin-left:1rem;
+        border-style: solid;
+        border-width: 3px;      /* thicker border */
+        background: transparent;
+        box-shadow:none;
+        font-size:1.05rem;
+        padding: 0.5rem;        /* small padding retained for readability */
+      }
+      #tps-breakdown { font-size:1.05rem; line-height:1.4rem; }
+
+      /* Hide hr lines from looking too heavy on the compact TPS area */
+      #tps-panel hr { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 0.5rem 0; }
+
+      /* Responsive: move TPS under main area on small screens */
+      @media (max-width: 900px) {
+        #game-layout { flex-direction: column; align-items:stretch; }
+        #tps-panel { position: static; width: auto; margin: 1rem 0 0 0; }
+      }
+    </style>
 </head>
 
 <body>
@@ -20,7 +76,7 @@
         <p id="click-count">Trains: <span id="count"></span></p>
         <p id="train-freq">tps: <span id="frequency"></span></p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:0.75rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">
 
             <div class="button-container">
                 <button onclick="buyUpgrade()">Buy Upgrade <span id="upgrade-cost"> </span></button>
@@ -76,7 +132,7 @@
             </div>
         </div>
 
-        <div style="margin-top: 1rem; display:flex; gap:0.5rem; align-items:center;">
+        <div style="margin-top: 1.25rem; display:flex; gap:0.6rem; align-items:center;">
             <button class="page-button" onclick="saveGame()">Save Game</button>
             <button class="page-button" onclick="resetGame()">Reset Game</button>
             <a class="page-button" href="../index.html">Home Page</a>
@@ -84,9 +140,9 @@
       </div>
 
       <!-- Right: TPS area (not a box; has border only). Border color will be synced to button color via JS -->
-      <div id="tps-panel" style="width:280px; margin-left:1rem; border:1px solid; background:transparent; box-shadow:none; font-size:1rem;">
-        <h3 style="margin:0 0 0.5rem 0; font-size:1.05rem;">TPS Breakdown</h3>
-        <div id="tps-breakdown" style="font-size:1rem; line-height:1.35rem;">
+      <div id="tps-panel">
+        <h3 style="margin:0 0 0.5rem 0; font-size:1.15rem;">TPS Breakdown</h3>
+        <div id="tps-breakdown">
           <div data-key="workers">Workers: <span id="tps-workers"></span></div>
           <div data-key="coalmines">Coal Mines: <span id="tps-coalmines"></span></div>
           <div data-key="steelmines">Steel Mines: <span id="tps-steelmines"></span></div>
@@ -99,7 +155,7 @@
           <div data-key="sp">Steel Planets: <span id="tps-sp"></span></div>
           <div data-key="cd">Coal Dimensions: <span id="tps-cd"></span></div>
           <div data-key="sd">Steel Dimensions: <span id="tps-sd"></span></div>
-          <hr style="margin:0.5rem 0">
+          <hr>
           <div style="font-weight:700;">Total: <span id="tps-total"></span></div>
         </div>
       </div>
